@@ -2051,7 +2051,7 @@ h1,h2,h3,h4,h5,h6{line-height:1.4;font-weight:700}
 @media(max-width:600px){#hbArticles h2,#incident-safety .case-header h2{font-size:24px!important}#hbArticles h3,#incident-safety h3{font-size:19px!important}#hbArticles p,#hbArticles li,#incident-safety .case-body p,#incident-safety .case-body li{font-size:16px!important}#hbArticles td,#hbArticles th{font-size:14px!important}}
 </style>
 <style id="nucleo-posts">
-.np-section{border-top:3px solid var(--navy);margin-top:34px;padding-top:18px}
+.np-section{border-top:3px solid var(--navy);margin:0 0 34px;padding-top:18px}
 .np-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:6px}
 .np-head h2{font:400 27px/1.25 "NuclearText",Arial,Helvetica,sans-serif;color:var(--navy);margin:0}
 .np-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 30px}
@@ -2274,6 +2274,10 @@ h1,h2,h3,h4,h5,h6{line-height:1.4;font-weight:700}
     >
     <main class="wrap" id="mainContent">
 <section id="editorialHome" class="editorial-home" aria-label="Trang chủ Thư Viện Y Học Hạt Nhân">
+<section id="latestPosts" class="np-section" aria-label="Bài viết mới nhất" hidden>
+  <div class="np-head"><h2>Bài viết mới nhất</h2></div>
+  <div class="np-list" id="latestPostsList"></div>
+</section>
   <div class="front-grid">
     <article class="feature">
       <p class="feature-label">Chuyên đề PET/CT</p>
@@ -2292,10 +2296,6 @@ h1,h2,h3,h4,h5,h6{line-height:1.4;font-weight:700}
     <a href="#handbook" data-front-hb="safety">An toàn bức xạ và quản lý chất lượng <span aria-hidden="true">↗</span></a>
     <a href="#incident-safety" data-front="incidents">Phân tích sự cố y khoa <span aria-hidden="true">↗</span></a>
   </nav>
-<section id="latestPosts" class="np-section" aria-label="Bài viết mới nhất" hidden>
-  <div class="np-head"><h2>Bài viết mới nhất</h2></div>
-  <div class="np-list" id="latestPostsList"></div>
-</section>
 </section>
 
       <div class="breadcrumb">
@@ -2405,8 +2405,8 @@ h1,h2,h3,h4,h5,h6{line-height:1.4;font-weight:700}
               Bộ lọc
             </button>
           </div>
-<section id="incident-safety" class="case-library" aria-label="Các bài phân tích sự cố Y học hạt nhân" hidden></section>
 <section id="categoryPosts" class="np-cat-block" aria-label="Bài viết trong chuyên mục" hidden></section>
+<section id="incident-safety" class="case-library" aria-label="Các bài phân tích sự cố Y học hạt nhân" hidden></section>
 
           <div class="tabs" role="group" aria-label="Nguồn tài liệu">
             <button class="tab" data-origin="all" aria-pressed="true">
@@ -2433,8 +2433,8 @@ h1,h2,h3,h4,h5,h6{line-height:1.4;font-weight:700}
             ></p>
             <label class="sort"
               >Sắp xếp:<select id="sortOrder" aria-label="Thứ tự tài liệu">
+                <option value="newest">Mới nhất trước</option>
                 <option value="default">Đề xuất</option>
-                <option value="newest">Năm mới nhất</option>
                 <option value="title">Tên A → Z</option>
               </select></label
             >
@@ -2751,7 +2751,7 @@ h1,h2,h3,h4,h5,h6{line-height:1.4;font-weight:700}
         language: "all",
         status: "all",
         savedOnly: false,
-        sort: "default",
+        sort: "newest",
       };
       const searchable = new Map(
         sopDatabase.map((doc) => [
@@ -2820,11 +2820,17 @@ h1,h2,h3,h4,h5,h6{line-height:1.4;font-weight:700}
           );
         return filtered;
       }
+      function categoryItemCount(id) {
+        const documents = id === "incident-safety" ? 0 : sopDatabase.filter(d => hasCategory(d, id)).length;
+        const incidents = id === "all" || id === "incident-safety" ? window.NucleoIncidents.count : 0;
+        const posts = window.NucleoPosts ? window.NucleoPosts.count(id) : 0;
+        return documents + incidents + posts;
+      }
       function renderCategories() {
         $("#categoryList").innerHTML = categories
           .map(
             (c) =>
-              `<button class="category ${state.category === c.id ? "active" : ""}" data-category="${c.id}" aria-pressed="${state.category === c.id}">${icon(c.icon, 16)}<span class="category-label">${escapeHtml(c.label)}</span><span class="count">${c.id === "incident-safety" ? window.NucleoIncidents.count + " bài" : sopDatabase.filter((d) => hasCategory(d, c.id)).length}</span></button>`,
+              `<button class="category ${state.category === c.id ? "active" : ""}" data-category="${c.id}" aria-pressed="${state.category === c.id}">${icon(c.icon, 16)}<span class="category-label">${escapeHtml(c.label)}</span><span class="count">${categoryItemCount(c.id)}</span></button>`,
           )
           .join("");
       }
@@ -3112,7 +3118,7 @@ h1,h2,h3,h4,h5,h6{line-height:1.4;font-weight:700}
           language: "all",
           status: "all",
           savedOnly: false,
-          sort: "default",
+          sort: "newest",
         });
         render();
       }
@@ -3728,6 +3734,10 @@ const fmtDate = iso => { try { return new Date(iso).toLocaleDateString("vi-VN");
 const typo = el => { try { window.applyClinicalTypography && window.applyClinicalTypography(el); } catch (e) {} };
 
 let posts = [];
+// Cùng nguồn dữ liệu với danh sách đang hiển thị; tính lại để tránh cộng dồn.
+window.NucleoPosts = {
+  count: id => id === "all" ? posts.length : posts.filter(p => p.category === id).length
+};
 let session = null;
 try { session = JSON.parse(localStorage.getItem(SESSION_KEY) || "null"); } catch (e) {}
 const saveSession = s => { session = s; try { s ? localStorage.setItem(SESSION_KEY, JSON.stringify(s)) : localStorage.removeItem(SESSION_KEY); } catch (e) {} };
@@ -3785,7 +3795,7 @@ function postItem(p, withImg = true) {
 }
 function renderHome() {
   const box = $("#latestPosts"); if (!box) return;
-  const list = posts.slice(0, 6);
+  const list = posts;
   box.hidden = !list.length;
   $("#latestPostsList").innerHTML = list.map(p => postItem(p)).join("");
   typo(box);
@@ -3793,18 +3803,22 @@ function renderHome() {
 function renderCategory(st) {
   const box = $("#categoryPosts"); if (!box) return;
   const cat = st && st.category;
-  const list = cat && cat !== "all" ? posts.filter(p => p.category === cat) : [];
+  const list = cat === "all" ? posts : cat ? posts.filter(p => p.category === cat) : [];
   box.hidden = !list.length;
-  box.innerHTML = list.length ? '<div class="np-head"><h2>Bài viết mới trong chuyên mục</h2></div><div class="np-list">' + list.map(p => postItem(p)).join("") + "</div>" : "";
+  box.innerHTML = list.length ? '<div class="np-head"><h2>' + (cat === "all" ? "Bài viết mới nhất" : "Bài viết mới trong chuyên mục") + '</h2></div><div class="np-list">' + list.map(p => postItem(p)).join("") + "</div>" : "";
   typo(box);
 }
-function renderAll() { renderHome(); renderCategory(typeof state !== "undefined" ? state : null); }
+function renderAll() {
+  renderHome();
+  renderCategory(typeof state !== "undefined" ? state : null);
+  renderCategories();
+}
 
 async function load() {
   if (!ready) return;
   try {
-    posts = (await api("posts?select=*&order=created_at.desc")) || [];
-    posts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    posts = (await api("posts?select=*&order=created_at.desc.nullslast")) || [];
+    posts.sort((a, b) => (Date.parse(b.created_at) || 0) - (Date.parse(a.created_at) || 0));
   } catch (e) { posts = []; }
   renderAll();
 }
