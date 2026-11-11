@@ -2077,6 +2077,10 @@ h1,h2,h3,h4,h5,h6{line-height:1.4;font-weight:700}
 .np-form{display:grid;gap:14px}
 .np-form label{display:grid;gap:5px;font-size:12px;font-weight:600;color:#465661}
 .np-form input,.np-form select,.np-form textarea{border:1px solid #cfd8de;border-radius:2px;padding:10px 12px;font-size:14px;background:#fff;width:100%;color:var(--ink)}
+.np-form input[type=file]::file-selector-button{border:0;border-radius:2px;background:var(--navy);color:#fff;padding:8px 12px;margin-right:12px;cursor:pointer}
+.np-cover-preview{display:grid;justify-items:start;gap:8px}
+.np-cover-preview[hidden]{display:none}
+.np-cover-preview img{max-width:100%;max-height:220px;object-fit:contain;border:1px solid #cfd8de}
 .np-form textarea{min-height:280px;resize:vertical;line-height:1.7}
 .np-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .np-help{font-size:11px;font-weight:400;color:#6b757e;line-height:1.6}
@@ -3695,6 +3699,30 @@ const SESSION_KEY = "nucleo-admin-session-v1";
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const safeUrl = v => { try { const u = new URL(String(v || "").trim()); return /^https?:$/.test(u.protocol) ? u.href : ""; } catch (e) { return ""; } };
+// Ảnh tải lên được lưu trong trường cover_url hiện có, không cần bucket riêng.
+const safeCover = v => {
+  const value = String(v || "");
+  return /^data:image\/(?:jpeg|png|webp);base64,[A-Za-z0-9+/]+={0,2}$/.test(value) ? value : safeUrl(value);
+};
+async function prepareCover(file) {
+  if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) throw new Error("Vui lòng chọn ảnh JPG, PNG hoặc WebP.");
+  if (file.size > 10 * 1024 * 1024) throw new Error("Ảnh tối đa 10 MB. Vui lòng chọn ảnh nhỏ hơn.");
+  const url = URL.createObjectURL(file);
+  try {
+    const img = new Image();
+    await new Promise((resolve, reject) => { img.onload = resolve; img.onerror = () => reject(new Error("Không đọc được ảnh. Vui lòng chọn ảnh khác.")); img.src = url; });
+    const scale = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(img.naturalWidth * scale));
+    canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
+    const ctx = canvas.getContext("2d");
+    if (!ctx) throw new Error("Trình duyệt không xử lý được ảnh. Vui lòng thử trình duyệt khác.");
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    const data = canvas.toDataURL("image/webp", 0.82);
+    if (data.length > 2 * 1024 * 1024) throw new Error("Ảnh sau tối ưu vẫn quá lớn. Vui lòng chọn ảnh nhỏ hơn.");
+    return data;
+  } finally { URL.revokeObjectURL(url); }
+}
 const catLabel = id => (categories.find(c => c.id === id) || {}).label || id;
 const fmtDate = iso => { try { return new Date(iso).toLocaleDateString("vi-VN"); } catch (e) { return ""; } };
 const typo = el => { try { window.applyClinicalTypography && window.applyClinicalTypography(el); } catch (e) {} };
@@ -3752,7 +3780,7 @@ function renderBody(src) {
 
 /* ---------- Hiển thị: trang chủ + đúng chuyên mục ---------- */
 function postItem(p, withImg = true) {
-  const img = withImg && safeUrl(p.cover_url) ? '<img src="' + esc(safeUrl(p.cover_url)) + '" alt="" loading="lazy">' : "";
+  const img = withImg && safeCover(p.cover_url) ? '<img src="' + esc(safeCover(p.cover_url)) + '" alt="" loading="lazy">' : "";
   return '<article class="np-item">' + img + '<div class="np-meta"><span class="np-cat">' + esc(catLabel(p.category)) + "</span><span>" + fmtDate(p.created_at) + "</span>" + (p.published ? "" : '<span class="np-draft">Bản nháp</span>') + '</div><h3><button type="button" data-np-open="' + esc(p.id) + '">' + esc(p.title) + "</button></h3>" + (p.summary ? "<p>" + esc(p.summary) + "</p>" : "") + "</article>";
 }
 function renderHome() {
@@ -3788,7 +3816,7 @@ if (inc && inc.render) { const orig = inc.render; inc.render = function (st, sav
 /* ---------- Đọc bài ---------- */
 function openPost(id) {
   const p = posts.find(x => x.id === id); if (!p) return;
-  const cover = safeUrl(p.cover_url) ? '<img class="np-cover" src="' + esc(safeUrl(p.cover_url)) + '" alt="">' : "";
+  const cover = safeCover(p.cover_url) ? '<img class="np-cover" src="' + esc(safeCover(p.cover_url)) + '" alt="">' : "";
   $("#postReaderBody").innerHTML = '<div class="np-meta"><span class="np-cat">' + esc(catLabel(p.category)) + "</span><span>" + fmtDate(p.created_at) + "</span>" + (p.author ? "<span>" + esc(p.author) + "</span>" : "") + "</div><h1>" + esc(p.title) + "</h1>" + (p.summary ? '<p class="np-lead">' + esc(p.summary) + "</p>" : "") + cover + renderBody(p.body);
   typo($("#postReaderBody"));
   const d = $("#postReader"); d.showModal(); d.scrollTop = 0;
@@ -3812,15 +3840,40 @@ function adminView() {
   box.innerHTML = '<form class="np-form" id="npForm"><label>Tiêu đề<input name="title" required maxlength="200" value="' + esc(p.title) + '"></label>' +
     '<div class="np-row"><label>Chuyên mục<select name="category" required>' + opts + '</select></label><label>Tác giả (tuỳ chọn)<input name="author" maxlength="100" value="' + esc(p.author) + '"></label></div>' +
     '<label>Tóm tắt (hiện ở trang chủ)<input name="summary" maxlength="400" value="' + esc(p.summary) + '"></label>' +
-    '<label>Ảnh bìa — đường dẫn https (tuỳ chọn)<input name="cover_url" type="url" value="' + esc(p.cover_url) + '"></label>' +
+    '<label>Ảnh bìa — tải hình ảnh lên (tuỳ chọn)<input id="npCoverFile" name="cover_file" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="npCoverHelp npCoverStatus"><span id="npCoverHelp" class="np-help">Chọn ảnh JPG, PNG hoặc WebP từ thiết bị, tối đa 10 MB.</span></label>' +
+    '<div id="npCoverPreview" class="np-cover-preview" hidden><img id="npCoverImage" alt="Xem trước ảnh bìa"><button type="button" id="npCoverRemove" class="np-btn ghost">Xóa ảnh</button></div><span id="npCoverStatus" class="np-help" role="status" aria-live="polite"></span>' +
     '<label>Nội dung<textarea name="body" required>' + esc(p.body) + '</textarea><span class="np-help">Cách viết: để trống một dòng giữa các đoạn · <code>## Tiêu đề</code> · <code>### Tiêu đề nhỏ</code> · <code>- mục danh sách</code> · <code>**đậm**</code> · <code>*nghiêng*</code> · <code>[chữ](https://…)</code> · <code>![mô tả](https://ảnh)</code></span></label>' +
     '<label class="np-check"><input type="checkbox" name="published"' + (p.id ? (p.published ? " checked" : "") : " checked") + '> Hiển thị công khai (bỏ chọn = lưu nháp)</label>' +
     '<div class="np-actions"><button class="np-btn" type="submit">' + (p.id ? "Lưu thay đổi" : "Đăng bài") + '</button>' + (p.id ? '<button class="np-btn ghost" type="button" id="npCancel">Hủy sửa</button>' : "") + '<button class="np-btn ghost" type="button" id="npLogout">Đăng xuất</button><span class="np-msg" id="npMsg"></span></div></form>' +
     '<div class="np-manage"><h3>Các bài đã đăng (' + posts.length + ')</h3>' + (posts.length ? posts.map(x => '<div class="np-mrow"><span>' + esc(x.title) + "<small>" + esc(catLabel(x.category)) + " · " + fmtDate(x.created_at) + (x.published ? "" : " · nháp") + '</small></span><span class="np-actions"><button class="np-btn ghost" type="button" data-np-edit="' + esc(x.id) + '">Sửa</button><button class="np-btn danger" type="button" data-np-del="' + esc(x.id) + '">Xóa</button></span></div>').join("") : '<p class="np-empty">Chưa có bài nào.</p>') + "</div>";
+  let cover = safeCover(p.cover_url), coverBusy = false, coverRequest = 0;
+  const coverInput = $("#npCoverFile"), coverStatus = $("#npCoverStatus"), submit = $("#npForm [type=submit]");
+  const previewCover = () => {
+    $("#npCoverPreview").hidden = !cover;
+    if (cover) $("#npCoverImage").src = cover;
+    else $("#npCoverImage").removeAttribute("src");
+  };
+  previewCover();
+  coverInput.onchange = async () => {
+    const file = coverInput.files[0], request = ++coverRequest;
+    if (!file) { coverBusy = false; submit.disabled = false; coverStatus.textContent = ""; return; }
+    coverBusy = true; submit.disabled = true; coverStatus.textContent = "Đang xử lý ảnh…";
+    try {
+      const image = await prepareCover(file);
+      if (request !== coverRequest) return;
+      cover = image; previewCover(); coverStatus.textContent = "Đã chọn ảnh: " + file.name;
+    } catch (err) {
+      if (request !== coverRequest) return;
+      coverInput.value = ""; coverStatus.textContent = err.message;
+    } finally { if (request === coverRequest) { coverBusy = false; submit.disabled = false; } }
+  };
+  $("#npCoverRemove").onclick = () => {
+    ++coverRequest; coverBusy = false; cover = ""; coverInput.value = "";
+    submit.disabled = false; previewCover(); coverStatus.textContent = "Đã bỏ ảnh bìa.";
+  };
   $("#npForm").onsubmit = async e => {
     e.preventDefault(); const f = new FormData(e.target), m = $("#npMsg"), btn = e.target.querySelector("[type=submit]");
-    const cover = String(f.get("cover_url") || "").trim();
-    if (cover && !safeUrl(cover)) { m.textContent = "Đường dẫn ảnh bìa không hợp lệ."; return; }
+    if (coverBusy) { m.textContent = "Vui lòng chờ xử lý ảnh xong."; return; }
     const row = { title: String(f.get("title")).trim(), category: f.get("category"), author: String(f.get("author") || "").trim() || null, summary: String(f.get("summary") || "").trim() || null, cover_url: cover || null, body: f.get("body"), published: f.get("published") === "on" };
     btn.disabled = true; m.className = "np-msg"; m.textContent = "Đang lưu…";
     try {
