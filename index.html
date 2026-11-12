@@ -2529,6 +2529,12 @@ body.np-reading .topbar,body.np-reading .journal-nav,body.np-reading .np-reader-
 .np-form input[type=file]::file-selector-button{border:0;border-radius:2px;background:var(--navy);color:#fff;padding:8px 12px;margin-right:12px;cursor:pointer}
 .np-cover-preview{display:grid;justify-items:start;gap:8px}
 .np-cover-preview[hidden]{display:none}
+.np-cover-preview figure{margin:0;max-width:100%;width:480px;text-align:center}
+.np-cover-preview figure img{display:block;margin:0 auto}
+.np-cover-caption{display:block;margin:0;padding:8px 12px 0;color:#075d9b;font-size:12px;font-weight:400;line-height:1.65;text-align:center;overflow-wrap:anywhere}
+.np-cover-caption[hidden]{display:none}
+.np-article .np-cover-figure{margin:24px 0}
+.np-page .np-article .np-cover-figure .np-cover{margin:0}
 .np-cover-preview img{max-width:100%;max-height:220px;object-fit:contain;border:1px solid #cfd8de}
 .np-form textarea{min-height:280px;resize:vertical;line-height:1.7}
 .np-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -3649,6 +3655,19 @@ async function prepareCover(file) {
     return data;
   } finally { URL.revokeObjectURL(url); }
 }
+// Lưu chú thích trong body hiện có để tương thích cơ sở dữ liệu đang dùng.
+function readPostBody(value) {
+  const text = String(value || "");
+  const match = /^<!--nucleo-cover-caption:([^\r\n]*?)-->\r?\n/.exec(text);
+  if (match) {
+    try { return { caption: decodeURIComponent(match[1]), text: text.slice(match[0].length) }; }
+    catch (e) { /* Giữ nguyên nội dung nếu dữ liệu không hợp lệ. */ }
+  }
+  return { caption: "", text };
+}
+function writePostBody(text, caption) {
+  return caption ? "<!--nucleo-cover-caption:" + encodeURIComponent(caption) + "-->\n" + text : text;
+}
 const catLabel = id => (categories.find(c => c.id === id) || {}).label || id;
 const fmtDate = iso => { try { return new Date(iso).toLocaleDateString("vi-VN"); } catch (e) { return ""; } };
 const typo = el => { try { window.applyClinicalTypography && window.applyClinicalTypography(el); } catch (e) {} };
@@ -3814,8 +3833,10 @@ let newsLoaded = false;
 window.NucleoPosts.article = id => {
  const p=posts.find(x=>String(x.id)===String(id));
  if(!p)return newsLoaded?null:{title:'Đang tải bài viết…',pending:true,crumbs:[],html:'<h1 id="npReadTitle" tabindex="-1">Đang tải bài viết…</h1>'};
- const cover=safeCover(p.cover_url)?'<img class="np-cover" src="'+esc(safeCover(p.cover_url))+'" alt="'+esc(p.title)+'">':'';
- return {title:p.title,crumbs:[{label:catLabel(p.category),href:'#catalog',category:p.category}],html:'<h1 id="npReadTitle" tabindex="-1">'+esc(p.title)+'</h1><div class="np-meta"><span class="np-cat">'+esc(catLabel(p.category))+'</span><span>Ngày đăng: '+fmtDate(p.created_at)+'</span>'+(p.author?'<span>Tác giả: '+esc(p.author)+'</span>':'')+(p.published?'':'<span class="np-draft">Bản nháp</span>')+'</div>'+(p.summary?'<p class="np-lead">'+esc(p.summary)+'</p>':'')+cover+renderBody(p.body)};
+ const content=readPostBody(p.body);
+ const image=safeCover(p.cover_url)?'<img class="np-cover" src="'+esc(safeCover(p.cover_url))+'" alt="'+esc(p.title)+'">':'';
+ const cover=image&&content.caption?'<figure class="np-cover-figure">'+image+'<figcaption class="np-cover-caption">'+esc(content.caption)+'</figcaption></figure>':image;
+ return {title:p.title,crumbs:[{label:catLabel(p.category),href:'#catalog',category:p.category}],html:'<h1 id="npReadTitle" tabindex="-1">'+esc(p.title)+'</h1><div class="np-meta"><span class="np-cat">'+esc(catLabel(p.category))+'</span><span>Ngày đăng: '+fmtDate(p.created_at)+'</span>'+(p.author?'<span>Tác giả: '+esc(p.author)+'</span>':'')+(p.published?'':'<span class="np-draft">Bản nháp</span>')+'</div>'+(p.summary?'<p class="np-lead">'+esc(p.summary)+'</p>':'')+cover+renderBody(content.text)};
 };
 function openPost(id){window.NucleoReader?.open('bai-viet',id);}
 
@@ -3833,13 +3854,15 @@ function adminView() {
     return;
   }
   const p = editing || {};
+  const content = readPostBody(p.body);
   const opts = categories.filter(c => c.id !== "all").map(c => '<option value="' + esc(c.id) + '"' + (p.category === c.id ? " selected" : "") + ">" + esc(c.label) + "</option>").join("");
   box.innerHTML = '<form class="np-form" id="npForm"><label>Tiêu đề<input name="title" required maxlength="200" value="' + esc(p.title) + '"></label>' +
     '<div class="np-row"><label>Chuyên mục<select name="category" required>' + opts + '</select></label><label>Tác giả (tuỳ chọn)<input name="author" maxlength="100" value="' + esc(p.author) + '"></label></div>' +
     '<label>Tóm tắt (hiện ở trang chủ)<input name="summary" maxlength="400" value="' + esc(p.summary) + '"></label>' +
     '<label>Ảnh bìa — tải hình ảnh lên (tuỳ chọn)<input id="npCoverFile" name="cover_file" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="npCoverHelp npCoverStatus"><span id="npCoverHelp" class="np-help">Chọn ảnh JPG, PNG hoặc WebP từ thiết bị, tối đa 10 MB.</span></label>' +
-    '<div id="npCoverPreview" class="np-cover-preview" hidden><img id="npCoverImage" alt="Xem trước ảnh bìa"><button type="button" id="npCoverRemove" class="np-btn ghost">Xóa ảnh</button></div><span id="npCoverStatus" class="np-help" role="status" aria-live="polite"></span>' +
-    '<label>Nội dung<textarea name="body" required>' + esc(p.body) + '</textarea></label>' +
+    '<label>Chú thích ảnh (tuỳ chọn)<input id="npCoverCaption" name="cover_caption" maxlength="400" placeholder="Nhập chú thích hiển thị dưới ảnh" value="' + esc(content.caption) + '"></label>' +
+    '<div id="npCoverPreview" class="np-cover-preview" hidden><figure><img id="npCoverImage" alt="Xem trước ảnh bìa"><figcaption id="npCoverCaptionPreview" class="np-cover-caption" hidden></figcaption></figure><button type="button" id="npCoverRemove" class="np-btn ghost">Xóa ảnh</button></div><span id="npCoverStatus" class="np-help" role="status" aria-live="polite"></span>' +
+    '<label>Nội dung<textarea name="body" required>' + esc(content.text) + '</textarea></label>' +
     '<div class="np-editor-toolbar"><button type="button" id="npInsertLink" class="np-btn ghost">🔗 Chèn liên kết vào nội dung</button></div>' +
     '<label class="np-check"><input type="checkbox" name="published"' + (p.id ? (p.published ? " checked" : "") : " checked") + '> Hiển thị công khai (bỏ chọn = lưu nháp)</label>' +
     '<div class="np-actions"><button class="np-btn" type="submit">' + (p.id ? "Lưu thay đổi" : "Đăng bài") + '</button>' + (p.id ? '<button class="np-btn ghost" type="button" id="npCancel">Hủy sửa</button>' : "") + '<button class="np-btn ghost" type="button" id="npLogout">Đăng xuất</button><span class="np-msg" id="npMsg"></span></div></form>' +
@@ -3858,11 +3881,16 @@ function adminView() {
   };
   let cover = safeCover(p.cover_url), coverBusy = false, coverRequest = 0;
   const coverInput = $("#npCoverFile"), coverStatus = $("#npCoverStatus"), submit = $("#npForm [type=submit]");
+  const captionInput = $("#npCoverCaption"), captionPreview = $("#npCoverCaptionPreview");
   const previewCover = () => {
     $("#npCoverPreview").hidden = !cover;
+    captionInput.disabled = !cover;
+    captionPreview.textContent = captionInput.value.trim();
+    captionPreview.hidden = !cover || !captionPreview.textContent;
     if (cover) $("#npCoverImage").src = cover;
     else $("#npCoverImage").removeAttribute("src");
   };
+  captionInput.oninput = previewCover;
   previewCover();
   coverInput.onchange = async () => {
     const file = coverInput.files[0], request = ++coverRequest;
@@ -3878,13 +3906,13 @@ function adminView() {
     } finally { if (request === coverRequest) { coverBusy = false; submit.disabled = false; } }
   };
   $("#npCoverRemove").onclick = () => {
-    ++coverRequest; coverBusy = false; cover = ""; coverInput.value = "";
+    ++coverRequest; coverBusy = false; cover = ""; coverInput.value = ""; captionInput.value = "";
     submit.disabled = false; previewCover(); coverStatus.textContent = "Đã bỏ ảnh bìa.";
   };
   $("#npForm").onsubmit = async e => {
     e.preventDefault(); const f = new FormData(e.target), m = $("#npMsg"), btn = e.target.querySelector("[type=submit]");
     if (coverBusy) { m.textContent = "Vui lòng chờ xử lý ảnh xong."; return; }
-    const row = { title: String(f.get("title")).trim(), category: f.get("category"), author: String(f.get("author") || "").trim() || null, summary: String(f.get("summary") || "").trim() || null, cover_url: cover || null, body: f.get("body"), published: f.get("published") === "on" };
+    const row = { title: String(f.get("title")).trim(), category: f.get("category"), author: String(f.get("author") || "").trim() || null, summary: String(f.get("summary") || "").trim() || null, cover_url: cover || null, body: writePostBody(f.get("body"), cover ? String(f.get("cover_caption") || "").trim() : ""), published: f.get("published") === "on" };
     btn.disabled = true; m.className = "np-msg"; m.textContent = "Đang lưu…";
     try {
       if (p.id) await api("posts?id=eq." + encodeURIComponent(p.id), { method: "PATCH", body: JSON.stringify(row) });
