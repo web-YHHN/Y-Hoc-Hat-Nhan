@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#102c4a" />
     <meta
       name="description"
-      content="Thư viện Y Hạt Nhân — tra cứu SOP và tài liệu kỹ thuật, phân biệt nguồn Việt Nam, quốc tế và phân tích sự cố y khoa."
+      content="Thư Viện Y Học Hạt Nhân — tài liệu tham khảo chuyên ngành, cẩm nang và phân tích sự cố. Nội dung phục vụ học tập, nghiên cứu, không thay thế hướng dẫn thực hành lâm sàng."
     />
     <title>Thư Viện Y Học Hạt Nhân | Nuclear Medicine Library</title>
     <!-- Giao diện dùng CSS nội tuyến, không phụ thuộc CDN: tải nhanh và chạy được khi offline. -->
@@ -2595,6 +2595,199 @@ body.np-reading .topbar,body.np-reading .journal-nav,body.np-reading .np-reader-
 .np-page .source-actions .pdf-button{width:100%;justify-content:center}
 .np-page .np-article h1{font-size:24px}}
 </style>
+
+<style id="nucleo-search-css">
+.ns-search[hidden]{display:none}
+body.nucleo-searching #editorialHome,body.nucleo-searching #catalog,body.nucleo-searching #handbook,body.nucleo-searching #readingDesk,body.nucleo-searching #mainContent>.breadcrumb{display:none!important}
+.ns-search{max-width:960px;margin:28px auto 42px;min-height:50vh}
+.ns-heading{border-bottom:1px solid var(--line);padding-bottom:16px}
+.ns-heading h2{font-size:25px;line-height:1.5;margin:0 0 8px;color:var(--navy)}
+.ns-heading p{margin:0;color:var(--muted);font-size:14px;overflow-wrap:anywhere}
+.ns-result{padding:22px 0;border-bottom:1px solid var(--line);min-width:0}
+.ns-type{color:#075d9b;font-size:12px;font-weight:600}
+.ns-result h3{font-size:19px;line-height:1.6;margin:6px 0 8px;overflow-wrap:anywhere}
+.ns-result h3 a{color:var(--navy);text-decoration:none}
+.ns-result h3 a:hover,.ns-result h3 a:focus-visible{text-decoration:underline;text-underline-offset:3px}
+.ns-result p{font-size:14px;line-height:1.85;color:#4d5d68;margin:0;overflow-wrap:anywhere}
+.ns-empty{padding:24px 0}
+@media(max-width:600px){.ns-search{margin-top:20px}.ns-heading h2{font-size:22px}.ns-result h3{font-size:18px}}
+</style>
+
+<style id="nucleo-deep-reading-css">
+.np-deep-links{margin:32px 0 8px;padding-top:20px;border-top:1px solid var(--line)}
+.np-page .np-article .np-deep-links h2{font-size:21px;line-height:1.5;margin:0 0 12px;color:var(--navy)}
+.np-deep-links ul{list-style:none;margin:0;padding:0}
+.np-page .np-article .np-deep-links li{list-style:none;margin:0;padding:0;border-bottom:1px solid var(--line)}
+.np-page .np-article .np-deep-links a{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:48px;padding:12px 0;font-size:15px;line-height:1.7;text-decoration:none;color:var(--navy)}
+.np-deep-links a span:first-child{min-width:0;overflow-wrap:anywhere}
+.np-deep-links a span:last-child{flex-shrink:0;color:#075d9b}
+.np-page .np-article .np-deep-links a:hover,.np-page .np-article .np-deep-links a:focus-visible{color:#075d9b;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:600px){.np-deep-links{margin-top:24px}.np-page .np-article .np-deep-links h2{font-size:19px}}
+</style>
+<style id="nucleo-editor-enhancements">
+/* Nucleo | Trình đăng bài đa chế độ */
+.np-template-picker{display:flex;align-items:end;gap:12px;flex-wrap:wrap;padding:12px 14px;border-radius:9px;background:#f5f9fb;border:1px solid #d8e4eb}
+.np-template-picker label{flex:1 1 240px}
+.np-template-picker .np-btn{border-radius:7px;min-height:38px;padding:8px 14px}
+
+.np-dialog{width:min(1100px,calc(100vw - 24px));max-height:calc(100dvh - 24px);border-radius:12px;box-shadow:0 24px 80px rgba(0,28,44,.28);overflow:auto}
+.np-dialog-head{padding:18px 24px;box-shadow:0 1px 0 rgba(11,52,69,.08);border-radius:12px 12px 0 0}
+.np-dialog-head h2{font-size:19px}
+.np-body{padding:24px}
+.np-authoring{gap:18px}
+.np-authoring-heading{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;border-bottom:1px solid #e3eaf0;padding-bottom:16px}
+.np-authoring-heading>div{display:grid;gap:3px}
+.np-authoring-heading strong{font-size:19px;line-height:1.4;color:var(--navy)}
+.np-authoring-heading span{font-size:12px;color:#687682;font-weight:400}
+.np-save-indicator{display:inline-block;text-align:right;max-width:220px;flex:0 1 auto}
+.np-form input,.np-form select,.np-form textarea{border-radius:7px;transition:border-color .16s ease,box-shadow .16s ease}
+.np-form :is(input,select,textarea):focus-visible{outline:0;border-color:#067a99;box-shadow:0 0 0 3px rgba(0,127,149,.12)}
+.np-form textarea#npSummary{min-height:76px;resize:vertical;font:inherit;line-height:1.65}
+.np-cover-group{display:grid;gap:12px;padding:16px;border:1px solid #dce5eb;border-radius:10px;background:#f9fbfc}
+.np-cover-group .np-help{font-size:12px}
+.np-cover-group .np-cover-preview figure{width:min(100%,580px)}
+.np-restore{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;background:#f2f8fb;border:1px solid #cfe3ec;border-radius:9px;font-size:12px;color:#284555}
+.np-restore[hidden]{display:none}
+.np-restore>div{display:flex;gap:8px;flex-wrap:wrap}
+.np-restore .np-btn{min-height:34px;padding:7px 12px}
+.np-composer{border:1px solid #d8e3e9;border-radius:12px;overflow:hidden;background:#fff}
+.np-editor-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px 14px;background:#f5f8fa;border-bottom:1px solid #d8e3e9}
+.np-editor-head strong{font-size:14px;color:#163e55}
+.np-mode-tabs{display:flex;flex-wrap:wrap;gap:4px;padding:4px;border:1px solid #d5e1e8;border-radius:8px;background:#fff}
+.np-mode-tabs button{border:0;border-radius:6px;background:transparent;color:#465c6b;min-height:33px;padding:7px 12px;font-size:12px;font-weight:650;white-space:nowrap;cursor:pointer}
+.np-mode-tabs button[aria-selected="true"]{background:var(--navy);color:#fff;box-shadow:0 1px 5px rgba(12,49,65,.15)}
+.np-visual-wrap[hidden],.np-source-wrap[hidden]{display:none!important}
+.np-format-tools{display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding:10px 12px;background:#f9fbfc;border-bottom:1px solid #dfe8ed}
+.np-format-tools button{min-height:34px;border:1px solid transparent;border-radius:6px;padding:5px 9px;background:transparent;font-size:12px;font-weight:600;color:#315264;line-height:1.4;cursor:pointer}
+.np-format-tools button:hover,.np-format-tools button:focus-visible{border-color:#b6d3df;background:#e8f2f6;outline:none}
+#npVisualEditor{padding:24px 28px;min-height:420px;max-height:68vh;overflow-y:auto;color:#1c303d;font-size:16px;line-height:1.85;background:#fff;outline:0;overflow-wrap:anywhere}
+#npVisualEditor:focus{box-shadow:inset 0 0 0 2px rgba(0,127,155,.12)}
+#npVisualEditor:empty::before{content:attr(data-placeholder);color:#8a99a2;pointer-events:none}
+#npVisualEditor h2,.np-preview-article h2{font-size:24px;margin:20px 0 9px;color:#153d57;line-height:1.5}
+#npVisualEditor h3,.np-preview-article h3{font-size:20px;margin:18px 0 8px;color:#153d57;line-height:1.5}
+#npVisualEditor p,#npVisualEditor ul,#npVisualEditor ol,#npVisualEditor blockquote{margin:0 0 14px}
+#npVisualEditor :is(ul,ol){padding-left:28px}
+#npVisualEditor blockquote,.np-article blockquote{margin:18px 0;border-left:3px solid #1997ad;padding:10px 18px;background:#f5fafc;font-style:italic}
+#npVisualEditor img,.np-preview-article img,.np-article .np-inline-figure img{max-width:100%;height:auto;object-fit:contain;display:block;margin:0 auto;border-radius:6px}
+#npVisualEditor figure,.np-preview-article figure,.np-article .np-inline-figure{margin:24px auto;max-width:100%;text-align:center}
+#npVisualEditor figcaption,.np-preview-article figcaption,.np-article .np-inline-figure figcaption{font-size:12px;line-height:1.65;color:#617484;margin-top:10px;font-style:normal}
+#npVisualEditor table,.np-preview-article table,.np-article .np-content-table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14px;table-layout:auto}
+#npVisualEditor th,#npVisualEditor td,.np-preview-article th,.np-preview-article td,.np-article .np-content-table th,.np-article .np-content-table td{border:1px solid #d2e0e7;text-align:left;padding:10px 12px;vertical-align:top;overflow-wrap:anywhere}
+#npVisualEditor th,.np-preview-article th,.np-article .np-content-table th{background:#eef5f8;color:#173f59;font-weight:700}
+#npVisualEditor pre,.np-preview-article pre,.np-article pre{padding:16px;overflow-x:auto;white-space:pre;background:#f0f4f6;border-radius:8px;font-size:12px;line-height:1.6}
+#npVisualEditor a{color:#087ca4;text-decoration:underline}
+.np-source-wrap{background:#fff}
+.np-form #npSourceEditor{border:none;border-radius:0;padding:22px 24px;min-height:420px;max-height:70vh;overflow-y:auto;background:#fff;font:13px/1.85 ui-monospace,SFMono-Regular,Consolas,monospace;resize:vertical;tab-size:2;box-shadow:none}
+.np-editor-bottom{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 14px;border-top:1px solid #e6edf0;color:#657683;background:#f8fbfc}
+.np-editor-bottom .np-help{font-size:12px}
+.np-editor-stats{font-size:12px;white-space:nowrap;color:#617381}
+.np-editor-actions{display:flex;flex-wrap:wrap;gap:10px;padding:12px 14px;background:#fff;border-top:1px solid #e6edf0}
+.np-editor-actions .np-btn{border-radius:7px;min-height:38px;padding:8px 12px;font-size:12px}
+.np-preview-article{margin-top:0;padding:30px;border:1px solid #d8e3e9;border-radius:10px;background:#fff;overflow-x:auto;max-height:72vh;overflow-y:auto}
+.np-preview-article[hidden]{display:none}
+.np-preview-article .np-preview-label{font-size:12px;color:#627989;border-bottom:1px solid #e0e8ed;padding-bottom:12px;font-weight:700;text-transform:uppercase;letter-spacing:.025em}
+.np-preview-article .np-preview-content{max-width:860px;margin:auto;overflow-wrap:anywhere}
+.np-preview-article h1{font-size:28px;line-height:1.5;color:#173c55}
+.np-preview-article .np-preview-content p,.np-preview-article li{font-size:15px;line-height:1.9}
+.np-publish-actions{padding-top:6px;border-top:1px solid #e1e9ec}
+.np-publish-actions .np-btn{border-radius:7px}
+.np-manage{margin-top:26px;border-top:1px solid #dce6eb;padding-top:16px}
+.np-manage>summary{font-size:14px;font-weight:700;cursor:pointer;color:#143b55;padding:9px 0}
+.np-manage .np-manage-list{max-height:400px;overflow:auto}
+.np-article .table-scroll{overflow-x:auto;max-width:100%}
+.np-page .np-article .np-content-table{width:100%;font-size:14px}
+.np-article figure img{max-width:100%;height:auto}
+.np-article img{object-fit:contain}
+.np-article .np-inline-figure{max-width:900px}
+.np-article hr{border:0;border-top:1px solid #d9e4eb;margin:25px 0}
+@media(max-width:700px){
+ .np-dialog{width:calc(100vw - 10px);max-height:calc(100dvh - 10px);border-radius:8px}
+ .np-dialog-head{padding:12px 16px}
+ .np-body{padding:14px}
+ .np-editor-head{flex-direction:column;align-items:stretch;gap:10px}
+ .np-mode-tabs{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+ .np-mode-tabs button{font-size:11px;padding:7px 4px}
+ .np-format-tools{max-height:120px;overflow-y:auto}
+ #npVisualEditor{padding:16px;min-height:320px;font-size:15px}
+ .np-form #npSourceEditor{padding:14px;min-height:320px;font-size:12px}
+ .np-restore,.np-authoring-heading{flex-direction:column;align-items:flex-start}
+ .np-save-indicator{text-align:left}
+ .np-editor-bottom{align-items:flex-start;flex-direction:column;gap:3px}
+ .np-preview-article{padding:16px}
+ .np-preview-article h1{font-size:23px}
+ .np-preview-article table,.np-article .np-content-table{min-width:520px}
+ .np-editor-actions .np-btn{flex:1 1 100%}
+}
+
+</style>
+<style id="nucleo-about-style">
+/* Phần Giới thiệu: bố cục bài viết 1 cột ở mọi kích thước màn hình. */
+.np-page .np-article .nm-about{
+  display:block;box-sizing:border-box;width:100%;max-width:780px;
+  margin:0 auto;padding:0 12px 26px;
+  color:var(--text,#233047);font-family:"NuclearText",Arial,sans-serif;
+  overflow-wrap:break-word;word-break:normal;
+}
+.np-page .np-article .nm-about *{box-sizing:border-box}
+.np-page .np-article .nm-about-header{display:block;padding:0 0 14px;margin:0 0 15px;border:0}
+.np-page .np-article .nm-about h1{
+  font-size:clamp(26px,3vw,34px);font-weight:700;line-height:1.38;
+  color:var(--navy,#17314e);margin:0 0 23px;max-width:none;
+  letter-spacing:0;overflow-wrap:break-word;
+}
+.np-page .np-article .nm-about h1[tabindex="-1"]:focus{outline:none}
+.np-page .np-article .nm-about p,
+.np-page .np-article .nm-about li{
+  font-size:17px;line-height:1.82;font-weight:400;
+  letter-spacing:normal;overflow-wrap:break-word;
+}
+.np-page .np-article .nm-about p{margin:0 0 16px}
+.np-page .np-article .nm-about-header .nm-about-lead{
+  font-size:17px;line-height:1.82;color:inherit;margin:0 0 16px;font-weight:400;
+}
+.np-page .np-article .nm-about-section{display:block;padding:16px 0 0;margin:0}
+.np-page .np-article .nm-about-section + .nm-about-section{margin-top:14px;border-top:0}
+.np-page .np-article .nm-about h2{
+  display:block;font-size:clamp(21px,2.4vw,24px);font-weight:700;
+  line-height:1.42;color:var(--navy,#17314e);letter-spacing:normal;
+  margin:8px 0 16px;padding:0;
+}
+.np-page .np-article .nm-about-groups{display:block;width:100%;margin:0;padding:0}
+.np-page .np-article .nm-about-category{
+  display:block;min-width:0;width:100%;padding:0;margin:0 0 22px;
+  background:none;border:0;box-shadow:none;border-radius:0;
+}
+.np-page .np-article .nm-about-category h3{
+  font-size:19px;font-weight:700;line-height:1.5;
+  margin:0 0 11px;padding:0;color:var(--navy,#17314e);
+}
+.np-page .np-article .nm-about-category p{font-size:17px;line-height:1.82;margin:0 0 16px}
+.np-page .np-article .nm-about ul{display:block;margin:4px 0 21px;padding-left:25px}
+.np-page .np-article .nm-about li{margin:0 0 9px;padding-left:2px}
+.np-page .np-article .nm-about-disclaimer{
+  display:block;border:0;border-radius:0;padding:16px 0 0;background:none;
+}
+.np-page .np-article .nm-about .nm-about-emphasis{font-size:17px;margin-bottom:18px;color:inherit}
+.np-page .np-article .nm-about-motto{font-size:17px;line-height:1.82;margin-top:15px;padding:0;border:0;color:inherit}
+@media(max-width:600px){
+ .np-page .np-article .nm-about{padding:0 3px 24px;max-width:100%}
+ .np-page .np-article .nm-about h1{font-size:27px;line-height:1.42;margin-bottom:19px}
+ .np-page .np-article .nm-about h2{font-size:21px;margin:5px 0 14px}
+ .np-page .np-article .nm-about-category h3{font-size:18px;margin-bottom:9px}
+ .np-page .np-article .nm-about p,
+ .np-page .np-article .nm-about li,
+ .np-page .np-article .nm-about-header .nm-about-lead,
+ .np-page .np-article .nm-about-category p,
+ .np-page .np-article .nm-about .nm-about-emphasis,
+ .np-page .np-article .nm-about-motto{font-size:16px;line-height:1.78}
+ .np-page .np-article .nm-about-section{padding-top:12px}
+ .np-page .np-article .nm-about-category{margin-bottom:18px}
+}
+@media print{
+ .np-page .np-article .nm-about{max-width:100%;padding:0}
+ .np-page .np-article .nm-about-category{break-inside:avoid}
+}
+</style>
 </head>
   <body>
     <a class="skip" href="#catalog">Đến danh mục tài liệu</a>
@@ -2700,7 +2893,7 @@ body.np-reading .topbar,body.np-reading .journal-nav,body.np-reading .np-reader-
         >
         <div class="header-search" role="search">
           <label class="sr-only" for="search"
-            >Tìm tên tài liệu, cơ quan hoặc ghi chú</label
+            >Tìm kiếm toàn bộ nội dung trên website</label
           ><svg
             class="search-icon"
             width="18"
@@ -2714,7 +2907,8 @@ body.np-reading .topbar,body.np-reading .journal-nav,body.np-reading .np-reader-
           ><input
             id="search"
             type="search"
-            placeholder="Tìm tài liệu, kỹ thuật…"
+            placeholder="Tìm kiếm nội dung"
+            aria-controls="siteSearchResults"
             autocomplete="off"
           /><button
             class="clear-search"
@@ -2813,6 +3007,8 @@ body.np-reading .topbar,body.np-reading .journal-nav,body.np-reading .np-reader-
     <button id="modeHandbook" aria-pressed="false">Cẩm nang</button>
   </div>
 </div>
+
+      <section id="siteSearchResults" class="ns-search" aria-label="Kết quả tìm kiếm toàn website" hidden></section>
 
       <section
         id="catalog"
@@ -2987,11 +3183,69 @@ body.np-reading .topbar,body.np-reading .journal-nav,body.np-reading .np-reader-
   <div class="np-reader-footer"><button type="button" class="np-back" id="npBackToList">← Quay lại</button></div>
 </main>
 
-<footer class="journal-footer"><div class="wrap"><div class="footer-top"><div><a class="footer-brand" href="#" data-front="home">Thư Viện Y Học Hạt Nhân<small>Nuclear Medicine Library</small></a><p>Tài liệu tham khảo, cẩm nang kỹ thuật và phân tích sự cố trong Y học hạt nhân.</p></div><nav class="footer-links" aria-label="Điều hướng cuối trang"><a href="#catalog" data-front="library">Tài liệu</a><a href="#handbook" data-front="handbook">Cẩm nang</a><a href="#incident-safety" data-front="incidents">Sự cố y khoa</a><a href="#thong-tin/gioi-thieu" id="footerAbout">Về thư viện ↗</a></nav></div></div></footer>
+<footer class="journal-footer"><div class="wrap"><div class="footer-top"><div><a class="footer-brand" href="#" data-front="home">Thư Viện Y Học Hạt Nhân<small>Nuclear Medicine Library</small></a><p>Tài liệu tham khảo, cẩm nang kỹ thuật và phân tích sự cố trong Y học hạt nhân.</p></div><nav class="footer-links" aria-label="Điều hướng cuối trang"><a href="#catalog" data-front="library">Tài liệu</a><a href="#handbook" data-front="handbook">Cẩm nang</a><a href="#incident-safety" data-front="incidents">Sự cố y khoa</a><a href="#thong-tin/gioi-thieu" id="footerAbout">Giới thiệu ↗</a></nav></div></div></footer>
 
     <button id="legacyDialogBackdrop" class="legacy-dialog-backdrop" aria-label="Đóng cửa sổ" tabindex="-1" hidden></button>
     
-<template id="aboutContent"><h1 id="npReadTitle" tabindex="-1">Về thư viện</h1><p>Thư viện Y học hạt nhân: tài liệu chuyên ngành, cẩm nang kỹ thuật và các bài phân tích sự cố.</p></template>
+<template id="aboutContent">
+<div class="nm-about">
+  <header class="nm-about-header">
+    <h1 id="npReadTitle" tabindex="-1">Giới thiệu Thư Viện Y Học Hạt Nhân</h1>
+    <p class="nm-about-lead"><strong>Thư Viện Y Học Hạt Nhân (Nuclear Medicine Library)</strong> là nền tảng chia sẻ kiến thức, tổng hợp tài liệu và cung cấp thông tin tham khảo chuyên ngành Y học hạt nhân, hướng đến nhân viên y tế, giảng viên, sinh viên và những người quan tâm đến lĩnh vực này.</p>
+    <p>Website được xây dựng với mục tiêu tạo ra một không gian tra cứu khoa học, có hệ thống và thuận tiện, góp phần hỗ trợ quá trình học tập, nghiên cứu, cập nhật kiến thức và nâng cao nhận thức về chất lượng, an toàn trong thực hành Y học hạt nhân.</p>
+  </header>
+  <section class="nm-about-section" aria-labelledby="nm-about-content">
+    <h2 id="nm-about-content">1. Nội dung của thư viện</h2>
+    <p>Thư viện tập trung vào ba nhóm nội dung chính:</p>
+    <div class="nm-about-groups">
+      <section class="nm-about-category" aria-labelledby="nm-cat-resources">
+        <h3 id="nm-cat-resources">Tài liệu chuyên ngành</h3>
+        <p>Tổng hợp và giới thiệu các tài liệu, hướng dẫn chuyên môn, quy trình kỹ thuật, khuyến cáo và ấn phẩm khoa học liên quan đến Y học hạt nhân, bao gồm các lĩnh vực như PET/CT, SPECT/CT, xạ hình, dược chất phóng xạ, kiểm soát chất lượng và an toàn bức xạ.</p>
+        <p>Các tài liệu được giới thiệu nhằm hỗ trợ người đọc tìm hiểu, đối chiếu và tiếp cận những nguồn kiến thức chuyên môn trong nước và quốc tế.</p>
+      </section>
+      <section class="nm-about-category" aria-labelledby="nm-cat-handbook">
+        <h3 id="nm-cat-handbook">Cẩm nang Y học hạt nhân</h3>
+        <p>Cung cấp các bài viết tổng hợp, giải thích và hệ thống hóa kiến thức về nguyên lý kỹ thuật, thiết bị, đồng vị phóng xạ, dược chất phóng xạ, phương pháp kiểm nghiệm và những vấn đề thường gặp trong lĩnh vực Y học hạt nhân.</p>
+        <p>Nội dung hướng đến tính khoa học, dễ tiếp cận và có giá trị tham khảo trong học tập cũng như nghiên cứu chuyên môn.</p>
+      </section>
+      <section class="nm-about-category" aria-labelledby="nm-cat-incidents">
+        <h3 id="nm-cat-incidents">Sự cố y khoa trong Y học hạt nhân</h3>
+        <p>Phân tích các tình huống sai sót, sự cố và nguy cơ tiềm ẩn liên quan đến quá trình chuẩn bị, phân liều, sử dụng dược chất phóng xạ, vận hành thiết bị và thực hiện các kỹ thuật Y học hạt nhân.</p>
+        <p>Thông qua việc phân tích nguyên nhân, yếu tố nguy cơ và các biện pháp phòng ngừa, chuyên mục hướng đến mục tiêu nâng cao nhận thức về an toàn người bệnh, an toàn bức xạ và quản lý chất lượng.</p>
+        <p>Các tình huống được trình bày nhằm phục vụ học tập và trao đổi kinh nghiệm, không mặc nhiên được xem là kết luận điều tra sự cố hoặc hướng dẫn xử trí đã được phê duyệt.</p>
+      </section>
+    </div>
+  </section>
+  <section class="nm-about-section" aria-labelledby="nm-about-direction">
+    <h2 id="nm-about-direction">2. Định hướng phát triển</h2>
+    <p>Thư Viện Y Học Hạt Nhân hướng đến việc xây dựng nguồn thông tin chuyên ngành có tổ chức, dễ tìm kiếm và thuận tiện trong quá trình sử dụng.</p>
+    <p>Nội dung được định hướng dựa trên các tài liệu khoa học, hướng dẫn chuyên môn và nguồn tham khảo từ những tổ chức, cơ quan có liên quan như Bộ Y tế Việt Nam, Cơ quan Năng lượng Nguyên tử Quốc tế (IAEA), Hiệp hội Y học Hạt nhân Châu Âu (EANM) và Hiệp hội Y học Hạt nhân và Hình ảnh Phân tử Hoa Kỳ (SNMMI).</p>
+    <p>Việc tham khảo các nguồn này không đồng nghĩa với việc website được các tổ chức trên chứng nhận, bảo trợ hoặc phê duyệt về chuyên môn.</p>
+    <p>Thư viện khuyến khích tinh thần học tập liên tục, tư duy phản biện, đối chiếu tài liệu gốc và chia sẻ kiến thức có trách nhiệm.</p>
+  </section>
+  <section class="nm-about-section nm-about-disclaimer" aria-labelledby="nm-about-limits">
+    <h2 id="nm-about-limits">3. Giới hạn sử dụng và tuyên bố miễn trừ trách nhiệm</h2>
+    <p class="nm-about-emphasis"><strong>Toàn bộ thông tin trên website chỉ phục vụ mục đích học tập, nghiên cứu và tham khảo chuyên môn.</strong></p>
+    <p>Các bài viết, quy trình, thông số kỹ thuật, phân tích tình huống và tài liệu được giới thiệu trên website <strong>không phải là hướng dẫn thực hành lâm sàng chính thức và không được sử dụng trực tiếp làm căn cứ duy nhất để chẩn đoán, điều trị, chỉ định kỹ thuật, sử dụng dược chất phóng xạ hoặc xử trí các trường hợp thực tế.</strong></p>
+    <p>Trong thực hành chuyên môn, mọi quyết định phải dựa trên:</p>
+    <ul>
+      <li>Tình trạng cụ thể của người bệnh và đánh giá của nhân viên y tế có thẩm quyền.</li>
+      <li>Các quy định pháp luật, hướng dẫn chuyên môn và quy trình kỹ thuật hiện hành được cơ quan có thẩm quyền hoặc cơ sở y tế phê duyệt.</li>
+      <li>Điều kiện thực tế về trang thiết bị, nhân lực, dược chất phóng xạ, giấy phép và hệ thống bảo đảm chất lượng của từng cơ sở.</li>
+      <li>Việc kiểm tra, đối chiếu với tài liệu gốc và các khuyến cáo chuyên môn còn hiệu lực.</li>
+    </ul>
+    <p>Mặc dù nội dung được biên soạn với định hướng chính xác và khoa học, thông tin có thể chưa phản ánh đầy đủ những thay đổi mới nhất về quy định, bằng chứng nghiên cứu hoặc hướng dẫn thực hành.</p>
+    <p>Người đọc có trách nhiệm kiểm tra tính cập nhật, mức độ phù hợp và giá trị áp dụng của tài liệu trước khi sử dụng trong bất kỳ hoạt động chuyên môn nào.</p>
+    <p><strong>Website không thay thế ý kiến chuyên môn của bác sĩ, dược sĩ, chuyên gia vật lý y khoa hoặc nhân viên y tế được đào tạo và cấp phép phù hợp.</strong></p>
+  </section>
+  <section class="nm-about-section" aria-labelledby="nm-about-message">
+    <h2 id="nm-about-message">4. Thông điệp của thư viện</h2>
+    <p>Y học hạt nhân là lĩnh vực chuyên sâu, đòi hỏi sự kết hợp giữa kiến thức y học, dược học phóng xạ, vật lý bức xạ, công nghệ hình ảnh và các nguyên tắc bảo đảm an toàn.</p>
+    <p>Thư Viện Y Học Hạt Nhân mong muốn góp phần kết nối những nguồn tri thức này, hỗ trợ cộng đồng học tập và trao đổi kiến thức trên tinh thần khoa học, khách quan và có trách nhiệm.</p>
+    <p class="nm-about-motto"><strong>Tra cứu để hiểu đúng – Học tập để nâng cao kiến thức – Thực hành phải tuân thủ quy trình được phê duyệt.</strong></p>
+  </section>
+</div>
+</template>
     <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
     <script>
       "use strict";
@@ -3338,6 +3592,7 @@ body.np-reading .topbar,body.np-reading .journal-nav,body.np-reading .np-reader-
           $(id).textContent = sopDatabase.filter(
             (d) => originOf(d) === key,
           ).length;
+        window.NucleoSearch?.render(state.query);
       }
       function resetFilters() {
         Object.assign(state, {
@@ -3510,7 +3765,7 @@ const fold=t=>unSup(t).normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/
 const plain=h=>h.replace(/<[^>]*>/g," ");
 const matches=(item,q)=>item.sections.filter(([title,body])=>fold(title+" "+plain(body)).includes(q));
 function handbookMarkup(item){
- return '<h1 id="npReadTitle" tabindex="-1">'+esc(item.title)+'</h1><div class="np-meta"><span class="np-cat">Cẩm nang kỹ thuật</span></div><p class="np-lead">'+esc(item.deck)+'</p>'+item.sections.map(([h,b])=>'<section><h3>'+esc(h)+'</h3>'+b+'</section>').join('');
+ return '<h1 id="npReadTitle" tabindex="-1">'+esc(item.title)+'</h1><div class="np-meta"><span class="np-cat">Cẩm nang kỹ thuật</span></div><p class="np-lead">'+esc(item.deck)+'</p>'+item.sections.map(([h,b])=>'<section><h3>'+esc(h)+'</h3>'+b+'</section>').join('')+(window.NucleoPosts?.handbookLinks?.(item.id)||'');
 }
 window.NucleoHandbook={article(id){const item=handbook.find(x=>x.id===id);return item?{title:item.title,crumbs:[{label:'Cẩm nang',href:'#handbook',front:'handbook'}],html:handbookMarkup(item)}:null;},showList(){setMode('handbook',false);},ids:handbook.map(x=>x.id)};
 function renderArticles(query="") {
@@ -3723,46 +3978,192 @@ function linkMarkup(url, label) {
   const href = safeUrl(url);
   return href ? '<a href="' + esc(href) + '" target="_blank" rel="noopener noreferrer" title="Mở tài liệu trong tab mới">' + label + '</a>' : label;
 }
-function inline(t) {
-  const raw = String(t ?? "").trim();
-  const key = raw.toLocaleLowerCase("vi-VN").replace(/[.。]$/, "").replace(/\s+/g, " ").trim();
-  if (referenceLinks.has(key)) return linkMarkup(referenceLinks.get(key), esc(raw)) + ' <span class="np-external" aria-hidden="true">↗</span>';
-  const links = [];
-  const save = html => { const id = links.length; links.push(html); return "@@NP_LINK_" + id + "@@"; };
-  let html = esc(t);
-  // Markdown ảnh và liên kết có URL thật.
-  html = html.replace(/!\[([^\]]*)\]\((https?:\/\/[^\s)]+)\)/g, (m, alt, u) => {
-    const src = safeUrl(u.replace(/&amp;/g, "&"));
-    return src ? save('<img src="' + esc(src) + '" alt="' + alt + '" loading="lazy">') : m;
+/* ---------- Biên tập bài: Markdown + HTML an toàn ---------- */
+const ARTICLE_HTML_MARKER = '<!--nucleo-body-format:html-v1-->\n';
+const DRAFT_PREFIX = 'nucleo-article-localdraft-v2:';
+function decodeArticle(value) {
+  const src = String(value || '');
+  return src.startsWith(ARTICLE_HTML_MARKER) ? {format:'html', value:src.slice(ARTICLE_HTML_MARKER.length)} : {format:'markdown', value:src};
+}
+function encodeArticle(entry) { return entry.format === 'html' ? ARTICLE_HTML_MARKER + entry.value : entry.value; }
+const validImageSource = value => {
+  const src = String(value || '').trim();
+  if (/^data:image\/(?:png|jpeg|webp);base64,[A-Za-z0-9+/]+={0,2}$/i.test(src)) return src.length <= 850000 ? src : '';
+  return safeUrl(src);
+};
+const ARTICLE_ALLOWED = new Set(['P','BR','B','STRONG','I','EM','U','S','DEL','H2','H3','H4','H5','H6','UL','OL','LI','BLOCKQUOTE','A','IMG','FIGURE','FIGCAPTION','TABLE','THEAD','TBODY','TFOOT','TR','TH','TD','HR','DIV','SPAN','PRE','CODE','SUP','SUB']);
+const ARTICLE_DANGEROUS = new Set(['SCRIPT','STYLE','IFRAME','OBJECT','EMBED','FORM','INPUT','BUTTON','TEXTAREA','SELECT','OPTION','SVG','MATH','VIDEO','AUDIO','CANVAS','LINK','META','BASE','NOSCRIPT','TEMPLATE']);
+function sanitizeArticleHtml(source, opts={}) {
+  const doc = new DOMParser().parseFromString(String(source || ''), 'text/html');
+  const root = opts.extractArticle && doc.querySelector('article') || doc.body;
+  const output = document.createElement('div');
+  let elements = 0;
+  const walk = (node, parent) => {
+    if (elements++ > 12000) return;
+    if (node.nodeType === Node.TEXT_NODE) { parent.append(document.createTextNode(node.nodeValue || '')); return; }
+    if (node.nodeType !== Node.ELEMENT_NODE) return;
+    const tag = node.tagName.toUpperCase();
+    if (ARTICLE_DANGEROUS.has(tag)) return;
+    const next = ARTICLE_ALLOWED.has(tag) ? document.createElement(tag.toLowerCase()) : parent;
+    if (next !== parent) {
+      if (tag === 'A') {
+        const href = safeUrl(node.getAttribute('href'));
+        if (href) { next.href = href; next.target = '_blank'; next.rel = 'noopener noreferrer'; }
+      }
+      if (tag === 'IMG') {
+        const src = validImageSource(node.getAttribute('src'));
+        if (!src) return;
+        next.setAttribute('src', src);
+        next.setAttribute('alt', (node.getAttribute('alt') || '').slice(0,250));
+        next.setAttribute('loading','lazy');
+        next.setAttribute('decoding','async');
+      }
+      if (tag === 'TH' || tag === 'TD') {
+        for (const key of ['colspan','rowspan']) {
+          const n = Number(node.getAttribute(key));
+          if (Number.isInteger(n) && n >= 2 && n <= 10) next.setAttribute(key,String(n));
+        }
+      }
+      parent.append(next);
+    }
+    for (const child of Array.from(node.childNodes)) walk(child, next);
+  };
+  for (const child of Array.from(root.childNodes)) walk(child, output);
+  return output.innerHTML;
+}
+function articleInline(input) {
+  const raw=String(input||'').trim();
+  const key=raw.toLocaleLowerCase('vi-VN').replace(/[.。]$/,'').replace(/\s+/g,' ').trim();
+  if(referenceLinks.has(key))return linkMarkup(referenceLinks.get(key),esc(raw));
+  const placeholders=[];
+  const keep=html => { const n=placeholders.push(html)-1; return `@@NPMARK${n}@@`; };
+  let s=esc(input);
+  s=s.replace(/!\[([^\]]*)\]\(((?:https?:\/\/|data:image\/(?:png|jpeg|webp);base64,)[^\s)]+)\)/gi,(m,alt,src)=> {
+    const safe = validImageSource(src.replace(/&amp;/g,'&'));
+    return safe ? keep('<img src="'+esc(safe)+'" alt="'+alt+'" loading="lazy" decoding="async">') : esc('[Ảnh không hợp lệ]');
   });
-  html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (m, label, u) => {
-    const url = safeUrl(u.replace(/&amp;/g, "&"));
-    return url ? save(linkMarkup(url, label)) : m;
+  s=s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/gi, (m,label,src)=>{
+    const url=safeUrl(src.replace(/&amp;/g,'&'));
+    return url?keep('<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+label+'</a>'):label;
   });
-  // Đường dẫn https:// và www. dán trực tiếp cũng có thể bấm được.
-  html = html.replace(/(?:https?:\/\/|www\.)[^\s<>]+/g, part => {
-    const m = part.match(/^(.*?)([.,;!?]+)?$/);
-    const value = m ? m[1] : part, trail = m && m[2] || "";
-    const href = safeUrl((value.startsWith('www.') ? 'https://' : '') + value.replace(/&amp;/g, '&'));
-    return href ? save(linkMarkup(href, value)) + trail : part;
+  s=s.replace(/`([^`\n]+)`/g, (m,v)=>keep('<code>'+v+'</code>'));
+  s=s.replace(/(?:https?:\/\/|www\.)[^\s<>]+/g, part=>{
+    if(part.length>500)return part;
+    const match=part.match(/^(.*?)([.,;!?]+)?$/);
+    const plain=match?match[1]:part,trail=match&&match[2]||'';
+    const url=safeUrl((plain.startsWith('www.')?'https://':'')+plain.replace(/&amp;/g,'&'));
+    return url?keep('<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+plain+'</a>')+trail:part;
   });
-  html = html.replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>").replace(/(^|[^*])\*([^*\n]+)\*/g, "$1<i>$2</i>");
-  return html.replace(/@@NP_LINK_(\d+)@@/g, (m, id) => links[Number(id)] || m);
+  s=s.replace(/\*\*([^*\n]+)\*\*/g,'<strong>$1</strong>').replace(/(^|[^*])\*([^*\n]+)\*/g,'$1<em>$2</em>');
+  return s.replace(/@@NPMARK(\d+)@@/g,(m,id)=>placeholders[Number(id)]||m);
 }
 function renderBody(src) {
-  const out = []; let list = [];
-  const flush = () => { if (list.length) { out.push("<ul>" + list.map(x => "<li>" + inline(x) + "</li>").join("") + "</ul>"); list = []; } };
-  for (const block of String(src || "").replace(/\r/g, "").split(/\n{2,}/)) {
-    for (const line of block.split("\n")) {
-      if (/^- /.test(line)) { list.push(line.slice(2)); continue; }
-      flush();
-      if (/^### /.test(line)) out.push("<h4>" + inline(line.slice(4)) + "</h4>");
-      else if (/^## /.test(line)) out.push("<h3>" + inline(line.slice(3)) + "</h3>");
-      else if (line.trim()) out.push("<p>" + inline(line) + "</p>");
+  const lines=String(src || '').replace(/\r/g,'').split('\n');
+  const out=[]; let i=0;
+  const isTableSep=s=>/^\s*\|?\s*:?-{3,}:?\s*(?:\|\s*:?-{3,}:?\s*)+\|?\s*$/.test(s);
+  const cells=line=>line.trim().replace(/^\|/,'').replace(/\|$/,'').split('|').map(v=>v.trim());
+  const type=line => {
+    if (!line.trim())return 'blank';
+    if (/^```/.test(line))return 'code';
+    if (/^#{1,4}\s+/.test(line))return 'heading';
+    if (/^\s*(?:-{3,}|\*{3,})\s*$/.test(line))return 'rule';
+    if (/^>\s?/.test(line))return 'quote';
+    if (/^\s*[-*+]\s+/.test(line))return 'ul';
+    if (/^\s*\d+[.)]\s+/.test(line))return 'ol';
+    if (/^!\[[^\]]*\]\((?:https?:\/\/|data:image\/)/i.test(line.trim()))return 'image';
+    return 'para';
+  };
+  while(i<lines.length){
+    const line=lines[i],kind=type(line);
+    if(kind==='blank'){i++;continue;}
+    if(kind==='code'){
+      i++;const code=[];while(i<lines.length&&!/^```/.test(lines[i]))code.push(lines[i++]);
+      if(i<lines.length)i++;
+      out.push('<pre><code>'+esc(code.join('\n'))+'</code></pre>');continue;
     }
-    flush();
+    if(kind==='heading'){
+      const n=(line.match(/^#+/)||['##'])[0].length;const tag=n<=2?'h3':'h4';
+      out.push('<'+tag+'>'+articleInline(line.replace(/^#{1,4}\s+/,''))+'</'+tag+'>');i++;continue;
+    }
+    if(kind==='rule'){out.push('<hr>');i++;continue;}
+    if(kind==='image'){
+      const img=articleInline(line.trim());i++;
+      let cap='';
+      if(i<lines.length&&/^\s*\*[^*]+\*\s*$/.test(lines[i]))cap=articleInline(lines[i++].trim().slice(1,-1));
+      out.push('<figure class="np-inline-figure">'+img+(cap?'<figcaption>'+cap+'</figcaption>':'')+'</figure>');continue;
+    }
+    if(i+1<lines.length && line.includes('|') && isTableSep(lines[i+1])){
+      const headings=cells(line); i+=2;const rows=[];
+      while(i<lines.length&&lines[i].includes('|')&&lines[i].trim())rows.push(cells(lines[i++]));
+      out.push('<table class="np-content-table"><thead><tr>'+headings.map(v=>'<th>'+articleInline(v)+'</th>').join('')+'</tr></thead><tbody>'+rows.map(row=>'<tr>'+headings.map((h,j)=>'<td>'+articleInline(row[j]||'')+'</td>').join('')+'</tr>').join('')+'</tbody></table>');continue;
+    }
+    if(kind==='ul'||kind==='ol'){
+      const items=[];
+      while(i<lines.length&&type(lines[i])===kind){items.push(lines[i++].replace(kind==='ul'?/^\s*[-*+]\s+/:/^\s*\d+[.)]\s+/,''));}
+      out.push('<'+kind+'>'+items.map(v=>'<li>'+articleInline(v)+'</li>').join('')+'</'+kind+'>');continue;
+    }
+    if(kind==='quote'){
+      const q=[];while(i<lines.length&&type(lines[i])==='quote')q.push(lines[i++].replace(/^>\s?/,''));
+      out.push('<blockquote><p>'+articleInline(q.join(' '))+'</p></blockquote>');continue;
+    }
+    const para=[];
+    while(i<lines.length && type(lines[i])==='para' && !(i+1<lines.length && lines[i].includes('|') && isTableSep(lines[i+1])))para.push(lines[i++]);
+    if(para.length)out.push('<p>'+articleInline(para.join(' ').trim())+'</p>');
+    else {out.push('<p>'+articleInline(lines[i])+'</p>');i++;}
   }
-  return out.join("");
+  return out.join('');
+}
+function htmlToMarkdown(input) {
+  const doc=new DOMParser().parseFromString(sanitizeArticleHtml(input),'text/html');
+  const inner=node=>Array.from(node.childNodes).map(convert).join('');
+  const tableCell=s=>s.replace(/\|/g,'\\|').replace(/\s*\n\s*/g,' ').trim();
+  function convert(node){
+    if(node.nodeType===Node.TEXT_NODE)return (node.nodeValue||'').replace(/\u00a0/g,' ');
+    if(node.nodeType!==Node.ELEMENT_NODE)return '';
+    const tag=node.tagName.toLowerCase(),text=inner(node).trim();
+    switch(tag){
+      case 'br':return '\n';
+      case 'h2':return '\n\n## '+text+'\n\n';
+      case 'h3':return '\n\n### '+text+'\n\n';
+      case 'h4':case 'h5':case 'h6':return '\n\n#### '+text+'\n\n';
+      case 'p':return '\n\n'+text+'\n\n';
+      case 'strong':case 'b':return '**'+text+'**';
+      case 'em':case 'i':return '*'+text+'*';
+      case 'code':return node.parentElement?.tagName==='PRE'?text:'`'+text+'`';
+      case 'pre':return '\n\n```\n'+node.textContent.trim()+'\n```\n\n';
+      case 'a':return node.getAttribute('href')?'['+text+']('+node.getAttribute('href')+')':text;
+      case 'img':return '!['+(node.getAttribute('alt')||'')+']('+(node.getAttribute('src')||'')+')';
+      case 'figure':{const im=node.querySelector('img');const cap=node.querySelector('figcaption');return '\n\n'+(im?convert(im):'')+(cap?'\n*'+cap.textContent.trim()+'*':'')+'\n\n';}
+      case 'blockquote':return '\n\n> '+text.replace(/\n+/g,'\n> ')+'\n\n';
+      case 'li':return text+'\n';
+      case 'ul':return '\n\n'+Array.from(node.children).map(li=>'- '+inner(li).trim()).join('\n')+'\n\n';
+      case 'ol':return '\n\n'+Array.from(node.children).map((li,j)=>(j+1)+'. '+inner(li).trim()).join('\n')+'\n\n';
+      case 'table':{
+        const rows=Array.from(node.querySelectorAll('tr')).map(tr=>Array.from(tr.querySelectorAll('th,td')).map(td=>tableCell(td.textContent)));
+        if(!rows.length)return '';
+        const w=Math.max(...rows.map(r=>r.length));
+        return '\n\n'+rows.map((r,j)=>'| '+Array.from({length:w},(_,k)=>r[k]||'').join(' | ')+' |'+(j===0?'\n| '+Array(w).fill('---').join(' | ')+' |':'')).join('\n')+'\n\n';}
+      case 'hr':return '\n\n---\n\n';
+      default:return inner(node);
+    }
+  }
+  return inner(doc.body).replace(/\n{3,}/g,'\n\n').trim();
+}
+async function prepareInlineImage(file){
+  if(!['image/jpeg','image/png','image/webp'].includes(file.type))throw new Error('Ảnh trong bài chỉ hỗ trợ JPG, PNG hoặc WebP.');
+  if(file.size>10*1024*1024)throw new Error('Ảnh quá 10 MB.');
+  const url=URL.createObjectURL(file);
+  try {
+    const img=new Image();await new Promise((ok,fail)=>{img.onload=ok;img.onerror=fail;img.src=url;});
+    const canvas=document.createElement('canvas');const scale=Math.min(1,1400/Math.max(img.naturalWidth,img.naturalHeight));
+    canvas.width=Math.max(1,Math.round(img.naturalWidth*scale));canvas.height=Math.max(1,Math.round(img.naturalHeight*scale));
+    const ctx=canvas.getContext('2d');if(!ctx)throw new Error('Không xử lý được ảnh.');
+    ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);
+    let data=canvas.toDataURL('image/webp',.88);
+    if(data.length>800000){data=canvas.toDataURL('image/webp',.73);}
+    if(data.length>800000)throw new Error('Ảnh quá lớn sau khi nén. Hãy chọn ảnh nhẹ hơn hoặc sử dụng URL ảnh.');
+    return data;
+  } finally {URL.revokeObjectURL(url);}
 }
 
 /* ---------- Hiển thị: trang chủ + đúng chuyên mục ---------- */
@@ -3811,6 +4212,7 @@ function renderAll() {
   renderHome();
   renderCategory(typeof state !== "undefined" ? state : null);
   renderCategories();
+  window.NucleoSearch?.refresh();
 }
 
 async function load() {
@@ -3830,100 +4232,365 @@ if (inc && inc.render) { const orig = inc.render; inc.render = function (st, sav
 
 /* ---------- Nội dung bản tin cho trang đọc dùng chung ---------- */
 let newsLoaded = false;
+window.NucleoPosts.searchEntries = () => posts.map(p => {
+  const content = readPostBody(p.body);
+  const entry = decodeArticle(content.text);
+  const rendered = entry.format === 'html' ? sanitizeArticleHtml(entry.value) : renderBody(entry.value);
+  return { id:p.id, title:p.title, date:p.created_at, html:esc([p.title,p.summary,p.author,catLabel(p.category),content.caption].filter(Boolean).join(' ')) + ' ' + rendered };
+});
+/* Các liên kết dùng ID bài có thật; chỉ đưa bài công khai vào cẩm nang. */
+const handbookTopics = [
+  { id: 'pet', category: 'pet-ct', title: 'PET/CT' },
+  { id: 'spect', category: 'spect-ct', title: 'SPECT/CT' },
+  { id: 'thyroid', category: 'thyroid', title: 'Xạ hình tuyến giáp' },
+  { id: 'bone', category: 'bone', title: 'Xạ hình xương' },
+  { id: 'renal', category: 'renal', title: 'Xạ hình thận' },
+  { id: 'cardiac', category: 'cardiac', title: 'Xạ hình tim' },
+  { id: 'i131', category: 'i131', title: 'Điều trị bằng I-131' },
+  { id: 'radio', category: 'radiopharmacy', title: 'Dược chất phóng xạ' },
+  { id: 'safety', category: 'radiation-quality', title: 'An toàn bức xạ & QLCL' }
+];
+function handbookIdsForPost(post) {
+  const ids = new Set(handbookTopics.filter(topic => topic.category === post.category).map(topic => topic.id));
+  const title = normalize(post.title || '');
+  if (['pet-ct', 'spect-ct'].includes(post.category) && /dong kinh|epilepsy/.test(title)) {
+    ids.add('pet'); ids.add('spect');
+  }
+  if (/\bqc\b|\bqa\b|kiem (?:tra|soat) chat luong|bao dam chat luong|anh gia|nhieu anh/.test(title)) ids.add('safety');
+  if (post.category === 'incident-safety') {
+    ids.add('safety');
+    if (/duoc chat|pha che|thuoc|cap phat|phan lieu|gieng do|dose calibrator|tiem nham/.test(title)) ids.add('radio');
+    if (/\bpet\b|\bfdg\b/.test(title)) ids.add('pet');
+    if (/\bspect\b/.test(title)) ids.add('spect');
+    if (/xa hinh xuong/.test(title)) ids.add('bone');
+    if (/xa hinh than/.test(title)) ids.add('renal');
+    if (/co tim/.test(title)) ids.add('cardiac');
+    if (/i[- ]?131|dieu tri cuong giap/.test(title)) ids.add('i131');
+    else if (/tuyen giap/.test(title)) ids.add('thyroid');
+  }
+  return [...ids];
+}
+window.NucleoPosts.handbookLinks = id => {
+  if (!handbookTopics.some(topic => topic.id === id)) return '';
+  const entries = [
+    ...posts.filter(p => p.published === true && p.id != null && p.title).map(p => ({...p, kind: 'bai-viet'})),
+    ...(window.NUCLEO_CASES || []).filter(p => p.id != null && p.title).map(p => ({...p, category: 'incident-safety', kind: 'incident'}))
+  ];
+  const seen = new Set();
+  const related = entries.filter(p => {
+    const key = p.kind + '/' + p.id;
+    if (seen.has(key) || !handbookIdsForPost(p).includes(id)) return false;
+    seen.add(key); return true;
+  }).sort((a, b) => {
+    const direct = item => handbookTopics.some(topic => topic.id === id && topic.category === item.category) ? 1 : 0;
+    return direct(b) - direct(a) || (Date.parse(b.created_at) || 0) - (Date.parse(a.created_at) || 0);
+  });
+  if (!related.length) return '';
+  return '<nav class="np-deep-links" aria-label="Đọc chuyên sâu"><h2>Đọc chuyên sâu</h2><ul>' + related.map(p => {
+    const href = '#' + p.kind + '/' + encodeURIComponent(String(p.id));
+    return '<li><a href="' + esc(href) + '" data-reader-kind="' + p.kind + '" data-reader-id="' + esc(p.id) + '"><span>' + esc(p.title) + '</span><span aria-hidden="true">→</span></a></li>';
+  }).join('') + '</ul></nav>';
+};
+function relatedHandbookLinks(post) {
+  const ids = handbookIdsForPost(post);
+  const topics = handbookTopics.filter(topic => ids.includes(topic.id));
+  if (!topics.length) return '';
+  return '<nav class="np-deep-links np-handbook-refs" aria-label="Cẩm nang liên quan"><h2>Cẩm nang liên quan</h2><ul>' + topics.map(topic => '<li><a href="#cam-nang/' + topic.id + '" data-reader-kind="cam-nang" data-reader-id="' + topic.id + '"><span>' + esc(topic.title) + '</span><span aria-hidden="true">→</span></a></li>').join('') + '</ul></nav>';
+}
+
 window.NucleoPosts.article = id => {
  const p=posts.find(x=>String(x.id)===String(id));
  if(!p)return newsLoaded?null:{title:'Đang tải bài viết…',pending:true,crumbs:[],html:'<h1 id="npReadTitle" tabindex="-1">Đang tải bài viết…</h1>'};
  const content=readPostBody(p.body);
+ const articleText=decodeArticle(content.text);
+ const bodyHtml=articleText.format==='html'?sanitizeArticleHtml(articleText.value):renderBody(articleText.value);
  const image=safeCover(p.cover_url)?'<img class="np-cover" src="'+esc(safeCover(p.cover_url))+'" alt="'+esc(p.title)+'">':'';
  const cover=image&&content.caption?'<figure class="np-cover-figure">'+image+'<figcaption class="np-cover-caption">'+esc(content.caption)+'</figcaption></figure>':image;
- return {title:p.title,crumbs:[{label:catLabel(p.category),href:'#catalog',category:p.category}],html:'<h1 id="npReadTitle" tabindex="-1">'+esc(p.title)+'</h1><div class="np-meta"><span class="np-cat">'+esc(catLabel(p.category))+'</span><span>Ngày đăng: '+fmtDate(p.created_at)+'</span>'+(p.author?'<span>Tác giả: '+esc(p.author)+'</span>':'')+(p.published?'':'<span class="np-draft">Bản nháp</span>')+'</div>'+(p.summary?'<p class="np-lead">'+esc(p.summary)+'</p>':'')+cover+renderBody(content.text)};
+ return {title:p.title,crumbs:[{label:catLabel(p.category),href:'#catalog',category:p.category}],html:'<h1 id="npReadTitle" tabindex="-1">'+esc(p.title)+'</h1><div class="np-meta"><span class="np-cat">'+esc(catLabel(p.category))+'</span><span>Ngày đăng: '+fmtDate(p.created_at)+'</span>'+(p.author?'<span>Tác giả: '+esc(p.author)+'</span>':'')+(p.published?'':'<span class="np-draft">Bản nháp</span>')+'</div>'+(p.summary?'<p class="np-lead">'+esc(p.summary)+'</p>':'')+cover+bodyHtml+relatedHandbookLinks(p)};
 };
 function openPost(id){window.NucleoReader?.open('bai-viet',id);}
 
-/* ---------- Khu vực đăng bài ---------- */
+/* ---------- Khu vực đăng bài đa chế độ ---------- */
 let editing = null;
 function adminView() {
-  const box = $("#postAdminBody");
+  const box = $('#postAdminBody');
   if (!ready) { box.innerHTML = '<p>Chưa thể đăng bài. Vui lòng kiểm tra kết nối.</p>'; return; }
   if (!session) {
     box.innerHTML = '<form class="np-form" id="npLogin"><label>Email quản trị<input type="email" name="email" required autocomplete="username"></label><label>Mật khẩu<input type="password" name="password" required autocomplete="current-password"></label><div class="np-actions"><button class="np-btn" type="submit">Đăng nhập</button><span class="np-msg" id="npMsg"></span></div></form>';
-    $("#npLogin").onsubmit = async e => {
-      e.preventDefault(); const f = new FormData(e.target), m = $("#npMsg"); m.textContent = "";
-      try { await login(f.get("email"), f.get("password")); await load(); adminView(); } catch (err) { m.textContent = err.message; }
-    };
+    $('#npLogin').onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target),m=$('#npMsg');m.textContent='';try{await login(f.get('email'),f.get('password'));await load();adminView();}catch(err){m.textContent=err.message;}};
     return;
   }
-  const p = editing || {};
-  const content = readPostBody(p.body);
-  const opts = categories.filter(c => c.id !== "all").map(c => '<option value="' + esc(c.id) + '"' + (p.category === c.id ? " selected" : "") + ">" + esc(c.label) + "</option>").join("");
-  box.innerHTML = '<form class="np-form" id="npForm"><label>Tiêu đề<input name="title" required maxlength="200" value="' + esc(p.title) + '"></label>' +
-    '<div class="np-row"><label>Chuyên mục<select name="category" required>' + opts + '</select></label><label>Tác giả (tuỳ chọn)<input name="author" maxlength="100" value="' + esc(p.author) + '"></label></div>' +
-    '<label>Tóm tắt (hiện ở trang chủ)<input name="summary" maxlength="400" value="' + esc(p.summary) + '"></label>' +
-    '<label>Ảnh bìa — tải hình ảnh lên (tuỳ chọn)<input id="npCoverFile" name="cover_file" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="npCoverHelp npCoverStatus"><span id="npCoverHelp" class="np-help">Chọn ảnh JPG, PNG hoặc WebP từ thiết bị, tối đa 10 MB.</span></label>' +
-    '<label>Chú thích ảnh (tuỳ chọn)<input id="npCoverCaption" name="cover_caption" maxlength="400" placeholder="Nhập chú thích hiển thị dưới ảnh" value="' + esc(content.caption) + '"></label>' +
-    '<div id="npCoverPreview" class="np-cover-preview" hidden><figure><img id="npCoverImage" alt="Xem trước ảnh bìa"><figcaption id="npCoverCaptionPreview" class="np-cover-caption" hidden></figcaption></figure><button type="button" id="npCoverRemove" class="np-btn ghost">Xóa ảnh</button></div><span id="npCoverStatus" class="np-help" role="status" aria-live="polite"></span>' +
-    '<label>Nội dung<textarea name="body" required>' + esc(content.text) + '</textarea></label>' +
-    '<div class="np-editor-toolbar"><button type="button" id="npInsertLink" class="np-btn ghost">🔗 Chèn liên kết vào nội dung</button></div>' +
-    '<label class="np-check"><input type="checkbox" name="published"' + (p.id ? (p.published ? " checked" : "") : " checked") + '> Hiển thị công khai (bỏ chọn = lưu nháp)</label>' +
-    '<div class="np-actions"><button class="np-btn" type="submit">' + (p.id ? "Lưu thay đổi" : "Đăng bài") + '</button>' + (p.id ? '<button class="np-btn ghost" type="button" id="npCancel">Hủy sửa</button>' : "") + '<button class="np-btn ghost" type="button" id="npLogout">Đăng xuất</button><span class="np-msg" id="npMsg"></span></div></form>' +
-    '<div class="np-manage"><h3>Các bài đã đăng (' + posts.length + ')</h3>' + (posts.length ? posts.map(x => '<div class="np-mrow"><span>' + esc(x.title) + "<small>" + esc(catLabel(x.category)) + " · " + fmtDate(x.created_at) + (x.published ? "" : " · nháp") + '</small></span><span class="np-actions"><button class="np-btn ghost" type="button" data-np-edit="' + esc(x.id) + '">Sửa</button><button class="np-btn danger" type="button" data-np-del="' + esc(x.id) + '">Xóa</button></span></div>').join("") : '<p class="np-empty">Chưa có bài nào.</p>') + "</div>";
-  $("#npInsertLink").onclick = () => {
-    const textarea = $('#npForm textarea[name="body"]');
-    const a = textarea.selectionStart, b = textarea.selectionEnd;
-    const selected = textarea.value.slice(a, b).trim();
-    const address = prompt("Dán địa chỉ liên kết (bắt đầu bằng https://):", "https://");
-    if (address === null) return;
-    const href = safeUrl(address);
-    if (!href) { alert("Địa chỉ không hợp lệ. Vui lòng dùng liên kết https:// hoặc http://."); return; }
-    const label = selected || prompt("Tên hiển thị của liên kết:", "Đọc tài liệu") || "Đọc tài liệu";
-    textarea.setRangeText("[" + label.replace(/[\]\r\n]/g, " ") + "](" + href + ")", a, b, "end");
-    textarea.focus();
+  const p=editing||{},content=readPostBody(p.body);
+  let editorState=decodeArticle(content.text);
+  let currentMode=p.id?(editorState.format==='html'?'visual':'markdown'):'visual';
+  const options=categories.filter(c=>c.id!=='all').map(c=>'<option value="'+esc(c.id)+'"'+(p.category===c.id?' selected':'')+'>'+esc(c.label)+'</option>').join('');
+  box.innerHTML='<form class="np-form np-authoring" id="npForm">'+
+    '<div class="np-authoring-heading"><div><strong>'+(p.id?'Chỉnh sửa bài viết':'Tạo bài viết mới')+'</strong><span>Soạn trực quan, Markdown hoặc HTML — đăng trên cùng một hệ thống.</span></div><span class="np-save-indicator" id="npDraftSaved" role="status"></span></div>'+
+    '<div class="np-restore" id="npDraftRestoreBar" hidden><span id="npDraftRestoreText"></span><div><button type="button" class="np-btn ghost" id="npDraftRestore">Khôi phục</button><button type="button" class="np-btn ghost" id="npDraftDiscard">Bỏ nháp</button></div></div>'+
+    '<label>Tiêu đề bài viết <input name="title" required maxlength="200" placeholder="Nhập tiêu đề rõ ràng, dễ tìm kiếm" value="'+esc(p.title)+'"></label>'+
+    '<div class="np-row"><label>Chuyên mục <select name="category" required>'+options+'</select></label><label>Tác giả (tùy chọn)<input name="author" maxlength="100" value="'+esc(p.author)+'"></label></div>'+
+    '<label>Tóm tắt (hiện ở trang chủ)<textarea id="npSummary" name="summary" maxlength="400" rows="2" placeholder="Viết 2–3 câu giới thiệu nội dung chính">'+esc(p.summary)+'</textarea></label>'+
+    '<div class="np-cover-group"><label>Ảnh bìa (tùy chọn)<input id="npCoverFile" name="cover_file" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="npCoverHelp npCoverStatus"><span id="npCoverHelp" class="np-help">JPG, PNG hoặc WebP; tối đa 10 MB. Ảnh sẽ được tối ưu để tải nhanh.</span></label>'+
+    '<label>Chú thích ảnh bìa (tùy chọn)<input id="npCoverCaption" name="cover_caption" maxlength="400" placeholder="Mô tả ảnh và nguồn" value="'+esc(content.caption)+'"></label>'+
+    '<div id="npCoverPreview" class="np-cover-preview" hidden><figure><img id="npCoverImage" alt="Xem trước ảnh bìa"><figcaption id="npCoverCaptionPreview" class="np-cover-caption" hidden></figcaption></figure><button type="button" id="npCoverRemove" class="np-btn ghost">Xóa ảnh</button></div><span id="npCoverStatus" class="np-help" role="status" aria-live="polite"></span></div>'+
+    '<div class="np-template-picker"><label>Mẫu nội dung <select id="npArticleTemplate"><option value="feature">Chuyên đề chuyên môn</option><option value="news">Bản tin ngắn</option><option value="incident">Phân tích sự cố</option><option value="procedure">Quy trình kỹ thuật</option></select></label><button type="button" class="np-btn ghost" id="npTemplateApply">Dùng mẫu</button></div>'+
+    '<section class="np-composer" aria-label="Trình soạn bài"><div class="np-editor-head"><strong>Nội dung bài viết</strong><div class="np-mode-tabs" role="tablist" aria-label="Chọn cách soạn bài"><button type="button" data-np-mode="visual" role="tab" aria-selected="false">Soạn trực quan</button><button type="button" data-np-mode="markdown" role="tab" aria-selected="false">Markdown</button><button type="button" data-np-mode="html" role="tab" aria-selected="false">HTML</button></div></div>'+
+    '<div id="npVisualWrap" class="np-visual-wrap"><div class="np-format-tools" aria-label="Công cụ định dạng">'+
+      '<button type="button" data-np-cmd="bold" title="In đậm (Ctrl+B)"><b>B</b></button><button type="button" data-np-cmd="italic" title="In nghiêng"><i>I</i></button><button type="button" data-np-block="h2">Đề mục H2</button><button type="button" data-np-block="h3">Đề mục H3</button><button type="button" data-np-cmd="insertUnorderedList" title="Danh sách gạch đầu dòng">• Danh sách</button><button type="button" data-np-cmd="insertOrderedList" title="Danh sách đánh số">1. Danh sách</button><button type="button" data-np-block="blockquote">Trích dẫn</button><button type="button" data-np-action="link">Liên kết</button><button type="button" data-np-action="image">Ảnh</button><button type="button" data-np-action="image-url">Ảnh từ URL</button><button type="button" data-np-action="table">Bảng</button><button type="button" data-np-action="caption">Chú thích ảnh</button></div>'+
+      '<div id="npVisualEditor" contenteditable="true" role="textbox" aria-multiline="true" spellcheck="true" data-placeholder="Viết hoặc dán nội dung vào đây. Có thể dán từ Word và chèn hình vào giữa các đoạn..."></div></div>'+
+    '<div id="npSourceWrap" class="np-source-wrap" hidden><div class="np-format-tools" id="npSourceTools"><button type="button" data-np-action="h2">Đề mục</button><button type="button" data-np-action="bold">In đậm</button><button type="button" data-np-action="list">Danh sách</button><button type="button" data-np-action="link">Liên kết</button><button type="button" data-np-action="image">Chèn ảnh</button><button type="button" data-np-action="image-url">Ảnh URL</button><button type="button" data-np-action="table">Bảng</button></div><textarea id="npSourceEditor" spellcheck="false" rows="18" aria-label="Mã nguồn nội dung bài viết"></textarea></div>'+
+    '<div class="np-editor-bottom"><span class="np-help" id="npEditorHint"></span><span class="np-editor-stats" id="npEditorStats" aria-live="polite"></span></div>'+
+    '<div class="np-editor-actions"><button type="button" class="np-btn ghost" id="npImportArticle">Nhập tệp .md / .txt / .html</button><button type="button" class="np-btn ghost" id="npPreviewArticle">Xem trước bài viết</button><button type="button" class="np-btn ghost" id="npBackEditor" hidden>Quay lại chỉnh sửa</button></div>'+
+    '<input type="file" id="npInlineImage" accept="image/png,image/jpeg,image/webp" hidden><input type="file" id="npImportInput" accept=".md,.markdown,.txt,.html,.htm,text/plain,text/markdown,text/html" hidden></section>'+
+    '<div id="npArticlePreview" class="np-article np-preview-article" hidden></div>'+
+    '<label class="np-check"><input type="checkbox" name="published"'+(p.id?(p.published?' checked':''):' checked')+'> Hiển thị công khai (bỏ chọn để lưu nháp trong Supabase)</label>'+
+    '<div class="np-actions np-publish-actions"><button class="np-btn" type="submit" id="npPublish">'+(p.id?'Lưu thay đổi':'Đăng bài')+'</button><button type="button" class="np-btn ghost" id="npSaveAsDraft">Lưu nháp</button>'+(p.id?'<button class="np-btn ghost" type="button" id="npCancel">Hủy sửa</button>':'')+'<button class="np-btn ghost" type="button" id="npLogout">Đăng xuất</button><span class="np-msg" id="npMsg" role="status" aria-live="polite"></span></div></form>'+
+    '<details class="np-manage"><summary>Quản lý các bài viết ('+posts.length+')</summary><div class="np-manage-list">'+(posts.length?posts.map(x=>'<div class="np-mrow"><span>'+esc(x.title)+'<small>'+esc(catLabel(x.category))+' · '+fmtDate(x.created_at)+(x.published?'':' · nháp')+'</small></span><span class="np-actions"><button class="np-btn ghost" type="button" data-np-edit="'+esc(x.id)+'">Sửa</button><button class="np-btn danger" type="button" data-np-del="'+esc(x.id)+'">Xóa</button></span></div>').join(''):'<p class="np-empty">Chưa có bài nào.</p>')+'</div></details>';
+  const form=$('#npForm'),visual=$('#npVisualEditor'),source=$('#npSourceEditor'),status=$('#npEditorStats');
+  const visualWrap=$('#npVisualWrap'),sourceWrap=$('#npSourceWrap');
+  let cover=safeCover(p.cover_url),coverBusy=false,coverRequest=0,inlineBusy=false,previewOpen=false,autosaveTimer=null,savedRange=null;
+  const draftKey=DRAFT_PREFIX+(p.id||'new');
+  const localDraft=()=>{try{return JSON.parse(localStorage.getItem(draftKey)||'null');}catch{return null;}};
+  function currentArticle(){
+    if(currentMode==='visual')return {format:'html',value:sanitizeArticleHtml(visual.innerHTML)};
+    if(currentMode==='html')return {format:'html',value:sanitizeArticleHtml(source.value, {extractArticle:/<\s*(?:html|body)\b/i.test(source.value)})};
+    return {format:'markdown',value:source.value};
+  }
+  function loadMode(mode){
+    currentMode=mode;
+    for(const t of box.querySelectorAll('[data-np-mode]'))t.setAttribute('aria-selected',String(t.dataset.npMode===mode));
+    visualWrap.hidden=mode!=='visual';sourceWrap.hidden=mode==='visual';
+    if(mode==='visual')visual.innerHTML=editorState.format==='html'?sanitizeArticleHtml(editorState.value):renderBody(editorState.value);
+    else if(mode==='markdown')source.value=editorState.format==='markdown'?editorState.value:htmlToMarkdown(editorState.value);
+    else source.value=editorState.format==='html'?editorState.value:sanitizeArticleHtml(renderBody(editorState.value));
+    $('#npEditorHint').textContent=mode==='visual'?'Soạn như Word; dán văn bản và chỉnh định dạng trực tiếp.':mode==='markdown'?'Dùng ##, ###, **chữ đậm**, bảng Markdown và ![mô tả](URL).':'Dán HTML nội dung bài; mã không an toàn và CSS ngoài sẽ được loại bỏ.';
+    updateStats();
+  }
+  function changeMode(mode){
+    if(mode===currentMode)return;
+    editorState=currentArticle();loadMode(mode);markDraftDirty();
+  }
+  function updateStats(){
+    const plain=currentMode==='visual'?(visual.textContent||''):currentMode==='html'?(source.value.replace(/<[^>]+>/g,' ')):source.value.replace(/!\[[^\]]*\]\([^)]*\)/g,' ');
+    const words=(plain.trim().match(/\S+/g)||[]).length;
+    const imgs=currentMode==='visual'?visual.querySelectorAll('img').length:(source.value.match(currentMode==='html'?/<img\b/gi:/!\[[^\]]*\]\(/g)||[]).length;
+    status.textContent=words.toLocaleString('vi-VN')+' từ · '+imgs+' ảnh';
+  }
+  function storeDraft(){
+    const a=currentArticle();
+    const data={savedAt:Date.now(),article:a,title:form.elements.title.value,category:form.elements.category.value,author:form.elements.author.value,summary:form.elements.summary.value,caption:form.elements.cover_caption.value,published:form.elements.published.checked,cover:cover&&cover.length<300000?cover:null};
+    try { const json=JSON.stringify(data);if(json.length>3500000)throw new Error('Dữ liệu quá lớn');localStorage.setItem(draftKey,json);$('#npDraftSaved').textContent='Đã lưu tạm trên trình duyệt'; }
+    catch {$('#npDraftSaved').textContent='Bài quá lớn để lưu nháp trên trình duyệt — dùng nút Lưu nháp';}
+  }
+  function markDraftDirty(){
+    $('#npDraftSaved').textContent='Đang soạn…';clearTimeout(autosaveTimer);autosaveTimer=setTimeout(()=>{storeDraft();},1200);
+  }
+  function showRestore(){const draft=localDraft();if(draft&&draft.article){$('#npDraftRestoreBar').hidden=false;$('#npDraftRestoreText').textContent='Có bản soạn tạm từ '+new Date(draft.savedAt||Date.now()).toLocaleString('vi-VN')+'.';}else $('#npDraftRestoreBar').hidden=true;}
+  const articleTemplates={
+    feature:'<h2>Đại cương</h2><p>Giới thiệu vấn đề và ý nghĩa thực hành...</p><h2>Nguyên lý và cơ sở chuyên môn</h2><p>Trình bày cơ sở kỹ thuật...</p><h2>Ứng dụng trong thực hành</h2><p>Phân tích các bước chính, ví dụ và lưu ý...</p><h2>Sai số và giới hạn</h2><p>Các yếu tố ảnh hưởng đến kết quả...</p><h2>Tài liệu tham khảo</h2><ol><li>Tên tác giả, tài liệu, năm, URL...</li></ol>',
+    news:'<h2>Thông tin nổi bật</h2><p>Diễn biến chính, thời điểm và nguồn công bố...</p><h2>Chi tiết đáng chú ý</h2><p>Dữ liệu hoặc phát hiện đã được kiểm chứng...</p><h2>Ý nghĩa đối với thực hành Y học hạt nhân</h2><p>Tác động và lưu ý...</p><h2>Nguồn tin</h2><p>Liên kết đến nguồn gốc...</p>',
+    incident:'<h2>Tóm tắt sự cố</h2><p>Địa điểm, thời gian, đối tượng và diễn biến theo nguồn...</p><h2>Phân tích nguyên nhân</h2><p>Phân biệt dữ kiện xác nhận và giả thuyết...</p><h2>Ảnh hưởng và hậu quả</h2><p>Nêu giới hạn dữ liệu và mức độ ảnh hưởng đã ghi nhận...</p><h2>Biện pháp phòng ngừa</h2><ul><li>Kiểm soát đề xuất 1</li><li>Kiểm soát đề xuất 2</li></ul><h2>Tài liệu tham khảo</h2><p>Trích dẫn nguồn gốc ca sự cố...</p>',
+    procedure:'<h2>Mục đích và phạm vi</h2><p>Đối tượng và phạm vi áp dụng...</p><h2>Chỉ định và chống chỉ định</h2><p>Chi tiết theo tài liệu được phê duyệt...</p><h2>Chuẩn bị</h2><ul><li>Người bệnh</li><li>Dược chất phóng xạ</li><li>Trang thiết bị và nhân sự</li></ul><h2>Các bước thực hiện</h2><ol><li>Kiểm tra trước khi tiến hành</li><li>Thực hiện kỹ thuật</li><li>Kiểm tra kết quả</li></ol><h2>Kiểm soát chất lượng và an toàn</h2><p>Thông số và tiêu chí phải theo tài liệu áp dụng của cơ sở...</p><h2>Tài liệu tham khảo</h2><p>Văn bản và hướng dẫn được đối chiếu...</p>'
   };
-  let cover = safeCover(p.cover_url), coverBusy = false, coverRequest = 0;
-  const coverInput = $("#npCoverFile"), coverStatus = $("#npCoverStatus"), submit = $("#npForm [type=submit]");
-  const captionInput = $("#npCoverCaption"), captionPreview = $("#npCoverCaptionPreview");
-  const previewCover = () => {
-    $("#npCoverPreview").hidden = !cover;
-    captionInput.disabled = !cover;
-    captionPreview.textContent = captionInput.value.trim();
-    captionPreview.hidden = !cover || !captionPreview.textContent;
-    if (cover) $("#npCoverImage").src = cover;
-    else $("#npCoverImage").removeAttribute("src");
+  $('#npTemplateApply').onclick=()=>{
+    const curr=currentArticle();const hasData=curr.format==='html'?(new DOMParser().parseFromString(curr.value,'text/html').body.textContent||'').trim():curr.value.trim();
+    if(hasData&&!confirm('Áp dụng mẫu sẽ thay nội dung đang soạn. Bạn có muốn tiếp tục?'))return;
+    editorState={format:'html',value:articleTemplates[$('#npArticleTemplate').value]||articleTemplates.feature};
+    loadMode('visual');markDraftDirty();
   };
-  captionInput.oninput = previewCover;
-  previewCover();
-  coverInput.onchange = async () => {
-    const file = coverInput.files[0], request = ++coverRequest;
-    if (!file) { coverBusy = false; submit.disabled = false; coverStatus.textContent = ""; return; }
-    coverBusy = true; submit.disabled = true; coverStatus.textContent = "Đang xử lý ảnh…";
-    try {
-      const image = await prepareCover(file);
-      if (request !== coverRequest) return;
-      cover = image; previewCover(); coverStatus.textContent = "Đã chọn ảnh: " + file.name;
-    } catch (err) {
-      if (request !== coverRequest) return;
-      coverInput.value = ""; coverStatus.textContent = err.message;
-    } finally { if (request === coverRequest) { coverBusy = false; submit.disabled = false; } }
+  $('#npDraftRestore').onclick=()=>{
+    const draft=localDraft();if(!draft?.article)return;
+    for(const k of ['title','author','summary'])if(typeof draft[k]==='string')form.elements[k].value=draft[k];
+    if(draft.category)form.elements.category.value=draft.category;
+    if(typeof draft.caption==='string')form.elements.cover_caption.value=draft.caption;
+    if(typeof draft.published==='boolean')form.elements.published.checked=draft.published;
+    if(draft.cover)cover=draft.cover;
+    editorState=draft.article;
+    loadMode(editorState.format==='markdown'?'markdown':'visual');
+    coverPreview();$('#npDraftRestoreBar').hidden=true;$('#npDraftSaved').textContent='Đã khôi phục bản soạn tạm.';
   };
-  $("#npCoverRemove").onclick = () => {
-    ++coverRequest; coverBusy = false; cover = ""; coverInput.value = ""; captionInput.value = "";
-    submit.disabled = false; previewCover(); coverStatus.textContent = "Đã bỏ ảnh bìa.";
+  $('#npDraftDiscard').onclick=()=>{localStorage.removeItem(draftKey);showRestore();};
+  function coverPreview(){
+    const cap=$('#npCoverCaptionPreview');$('#npCoverPreview').hidden=!cover;
+    $('#npCoverCaption').disabled=!cover;
+    cap.textContent=$('#npCoverCaption').value.trim();cap.hidden=!cover||!cap.textContent;
+    if(cover)$('#npCoverImage').src=cover;else $('#npCoverImage').removeAttribute('src');
+  }
+  $('#npCoverCaption').oninput=coverPreview;coverPreview();
+  const coverFile=$('#npCoverFile'),coverStatus=$('#npCoverStatus'),submit=$('#npPublish');
+  coverFile.onchange=async()=>{
+    const file=coverFile.files[0],request=++coverRequest;
+    if(!file)return;
+    coverBusy=true;submit.disabled=true;coverStatus.textContent='Đang tối ưu ảnh bìa…';
+    try{const data=await prepareCover(file);if(request!==coverRequest)return;cover=data;coverPreview();markDraftDirty();coverStatus.textContent='Đã chọn '+file.name;}
+    catch(err){if(request===coverRequest){coverFile.value='';coverStatus.textContent=err.message;}}
+    finally{if(request===coverRequest){coverBusy=false;submit.disabled=false;}}
   };
-  $("#npForm").onsubmit = async e => {
-    e.preventDefault(); const f = new FormData(e.target), m = $("#npMsg"), btn = e.target.querySelector("[type=submit]");
-    if (coverBusy) { m.textContent = "Vui lòng chờ xử lý ảnh xong."; return; }
-    const row = { title: String(f.get("title")).trim(), category: f.get("category"), author: String(f.get("author") || "").trim() || null, summary: String(f.get("summary") || "").trim() || null, cover_url: cover || null, body: writePostBody(f.get("body"), cover ? String(f.get("cover_caption") || "").trim() : ""), published: f.get("published") === "on" };
-    btn.disabled = true; m.className = "np-msg"; m.textContent = "Đang lưu…";
-    try {
-      if (p.id) await api("posts?id=eq." + encodeURIComponent(p.id), { method: "PATCH", body: JSON.stringify(row) });
-      else await api("posts", { method: "POST", body: JSON.stringify(row) });
-      editing = null; newsPage = 1; await load(); adminView();
-      const m2 = $("#npMsg"); m2.className = "np-msg ok"; m2.textContent = row.published ? "Đã lưu bài viết." : "Đã lưu bản nháp.";
-    } catch (err) { btn.disabled = false; m.className = "np-msg"; m.textContent = "Lỗi: " + err.message; }
+  $('#npCoverRemove').onclick=()=>{++coverRequest;coverBusy=false;cover='';coverFile.value='';$('#npCoverCaption').value='';submit.disabled=false;coverPreview();markDraftDirty();};
+  for(const t of box.querySelectorAll('[data-np-mode]'))t.onclick=()=>changeMode(t.dataset.npMode);
+  function sourceInsert(before,after='',fallback='nội dung'){
+    const a=source.selectionStart,b=source.selectionEnd,sel=source.value.slice(a,b)||fallback;
+    source.setRangeText(before+sel+after,a,b,'select');source.focus();markDraftDirty();updateStats();
+  }
+  function rememberRange(){
+    const sel=window.getSelection();if(sel&&sel.rangeCount&&visual.contains(sel.anchorNode))savedRange=sel.getRangeAt(0).cloneRange();
+  }
+  visual.addEventListener('mouseup',rememberRange);visual.addEventListener('keyup',rememberRange);
+  function insertVisual(html){
+    visual.focus();const sel=window.getSelection();
+    if(savedRange){sel.removeAllRanges();sel.addRange(savedRange);}
+    const clean=sanitizeArticleHtml(html);
+    document.execCommand('insertHTML',false,clean);
+    savedRange=null;rememberRange();markDraftDirty();updateStats();
+  }
+  for(const btn of box.querySelectorAll('[data-np-cmd], [data-np-block]')){
+    btn.addEventListener('mousedown',e=>e.preventDefault());
+    btn.onclick=()=>{
+      visual.focus();
+      if(btn.dataset.npCmd)document.execCommand(btn.dataset.npCmd,false,null);
+      else document.execCommand('formatBlock',false,btn.dataset.npBlock);
+      rememberRange();markDraftDirty();updateStats();
+  };}
+  async function insertImage(data,caption=''){
+    const cap=String(caption).trim().slice(0,400),alt=cap||'Ảnh minh họa';
+    const curr=currentArticle();const count=(curr.value.match(curr.format==='html'?/<img\b/gi:/!\[[^\]]*\]\(/g)||[]).length;
+    if(count>=8)throw new Error('Mỗi bài tối đa 8 ảnh chèn trực tiếp. Có thể sử dụng liên kết ảnh để giảm dung lượng.');
+    if(currentMode==='visual')insertVisual('<figure><img src="'+esc(data)+'" alt="'+esc(alt)+'">'+(cap?'<figcaption>'+esc(cap)+'</figcaption>':'')+'</figure><p><br></p>');
+    else if(currentMode==='html')sourceInsert('\n<figure><img src="'+data+'" alt="'+esc(alt)+'">'+(cap?'<figcaption>'+esc(cap)+'</figcaption>':'')+'</figure>\n','', '');
+    else sourceInsert('\n\n!['+alt.replace(/[\[\]]/g,'')+']('+data+')'+(cap?'\n*'+cap+'*':'')+'\n\n','','');
+  }
+  const inlineFile=$('#npInlineImage');
+  inlineFile.onchange=async()=>{
+    const file=inlineFile.files[0];if(!file)return;
+    inlineBusy=true;$('#npEditorHint').textContent='Đang xử lý ảnh trong bài…';
+    try{const data=await prepareInlineImage(file);const cap=prompt('Chú thích hình ảnh (có thể bỏ trống):',file.name.replace(/\.[^.]+$/,''));await insertImage(data,cap===null?'':cap);}
+    catch(err){alert(err.message);}finally{inlineBusy=false;inlineFile.value='';$('#npEditorHint').textContent='Ảnh đã xử lý tại máy; dữ liệu ảnh sẽ được lưu cùng nội dung bài.';updateStats();}
   };
-  const c = $("#npCancel"); if (c) c.onclick = () => { editing = null; adminView(); };
-  $("#npLogout").onclick = () => { saveSession(null); editing = null; load(); adminView(); };
+  function insertLink(){
+    const url=prompt('Dán URL tài liệu (https:// hoặc http://):','https://');if(url===null)return;
+    const href=safeUrl(url);if(!href){alert('URL không hợp lệ.');return;}
+    if(currentMode==='visual'){
+      visual.focus();const sel=window.getSelection();if(savedRange){sel.removeAllRanges();sel.addRange(savedRange);}
+      if(sel&&sel.toString().trim())document.execCommand('createLink',false,href);
+      else insertVisual('<a href="'+esc(href)+'">'+esc(prompt('Tên liên kết:','Đọc tài liệu')||'Đọc tài liệu')+'</a>');
+      markDraftDirty();updateStats();
+    } else if(currentMode==='markdown'){
+      const a=source.selectionStart,b=source.selectionEnd,label=source.value.slice(a,b)||'Đọc tài liệu';source.setRangeText('['+label.replace(/[\]\r\n]/g,' ')+']('+href+')',a,b,'end');source.focus();markDraftDirty();updateStats();
+    }else sourceInsert('<a href="'+esc(href)+'">','</a>','Đọc tài liệu');
+  }
+  for(const b of box.querySelectorAll('[data-np-action]'))b.onclick=()=>{
+    const action=b.dataset.npAction;
+    if(action==='link')return insertLink();
+    if(action==='image'){inlineFile.click();return;}
+    if(action==='image-url'){
+      const url=prompt('Nhập URL ảnh trực tiếp (https://):','https://');if(url===null)return;
+      const valid=validImageSource(url);if(!valid){alert('URL ảnh không hợp lệ.');return;}
+      const caption=prompt('Chú thích ảnh (tùy chọn):','')||'';
+      insertImage(valid,caption).catch(err=>alert(err.message));return;
+    }
+    if(action==='table'){
+      if(currentMode==='visual')insertVisual('<table><thead><tr><th>Chỉ tiêu</th><th>Kết quả</th><th>Đánh giá</th></tr></thead><tbody><tr><td>Chỉ tiêu 1</td><td>—</td><td>—</td></tr><tr><td>Chỉ tiêu 2</td><td>—</td><td>—</td></tr></tbody></table><p><br></p>');
+      else if(currentMode==='markdown')sourceInsert('\n\n| Chỉ tiêu | Kết quả | Đánh giá |\n| --- | --- | --- |\n| Chỉ tiêu 1 | — | — |\n| Chỉ tiêu 2 | — | — |\n\n','','');
+      else sourceInsert('\n<table><thead><tr><th>Chỉ tiêu</th><th>Kết quả</th></tr></thead><tbody><tr><td>—</td><td>—</td></tr></tbody></table>\n','','');
+    } else if(action==='caption'&&currentMode==='visual')insertVisual('<figcaption>Chú thích hình: …</figcaption>');
+    else if(action==='h2')sourceInsert('## ','','Tiêu đề mục');
+    else if(action==='bold')sourceInsert('**','**','chữ in đậm');
+    else if(action==='list')sourceInsert('\n- ','','Mục danh sách');
+  };
+  visual.addEventListener('paste',event=>{
+    const html=event.clipboardData?.getData('text/html')||'';
+    if(!html)return;
+    event.preventDefault();const clean=sanitizeArticleHtml(html,{extractArticle:/<\s*(?:html|body)\b/i.test(html)});
+    document.execCommand('insertHTML',false,clean);markDraftDirty();updateStats();
+  });
+  async function convertImportedSvg(root){
+    const svgs=Array.from(root.querySelectorAll('svg')).slice(0,8);
+    for(const original of svgs){
+      try{
+        const svg=original.cloneNode(true);
+        svg.querySelectorAll('script,foreignObject,iframe,object,image,use,animate,animateMotion,animateTransform,set,style').forEach(n=>n.remove());
+        for(const n of [svg,...svg.querySelectorAll('*')])for(const a of Array.from(n.attributes)){
+          if(/^on/i.test(a.name)||/^(href|xlink:href)$/i.test(a.name)||/url\s*\(/i.test(a.value))n.removeAttribute(a.name);
+        }
+        svg.setAttribute('xmlns','http://www.w3.org/2000/svg');
+        const view=svg.getAttribute('viewBox')?.split(/[,\s]+/).map(Number)||[];
+        const width=Number(svg.getAttribute('width'))||view[2]||1100;
+        const height=Number(svg.getAttribute('height'))||view[3]||360;
+        if(!Number.isFinite(width)||!Number.isFinite(height)||width<=0||height<=0)continue;
+        const xml=new XMLSerializer().serializeToString(svg);
+        const blob=new Blob([xml],{type:'image/svg+xml'}),url=URL.createObjectURL(blob);
+        try{
+          const img=new Image();await new Promise((ok,fail)=>{img.onload=ok;img.onerror=fail;img.src=url;});
+          const canvas=document.createElement('canvas'),scale=Math.min(1,1400/Math.max(width,height));
+          canvas.width=Math.max(1,Math.round(width*scale));canvas.height=Math.max(1,Math.round(height*scale));
+          const context=canvas.getContext('2d');context.fillStyle='#ffffff';context.fillRect(0,0,canvas.width,canvas.height);context.drawImage(img,0,0,canvas.width,canvas.height);
+          let data=canvas.toDataURL('image/webp',.9);
+          if(data.length>800000)data=canvas.toDataURL('image/webp',.75);
+          if(data.length>800000)continue;
+          const alt=original.getAttribute('aria-label')||original.querySelector('title')?.textContent||'Sơ đồ minh họa';
+          const replacement=root.ownerDocument.createElement('img');replacement.src=data;replacement.alt=alt.slice(0,250);
+          original.replaceWith(replacement);
+        }finally{URL.revokeObjectURL(url);}
+      }catch(err){console.warn('Không chuyển đổi được một hình SVG:',err);}
+    }
+  }
+  $('#npImportArticle').onclick=()=>$('#npImportInput').click();
+  $('#npImportInput').onchange=async e=>{
+    const file=e.target.files[0];if(!file)return;
+    if(file.size>3*1024*1024){alert('File quá 3 MB. Chỉ nhập nội dung bài viết, không nhập ảnh dung lượng lớn trong file.');e.target.value='';return;}
+    try{
+      const text=await file.text();const html=/\.html?$/i.test(file.name)||/text\/html/i.test(file.type);
+      if(html){const doc=new DOMParser().parseFromString(text,'text/html');const article=doc.querySelector('article')||doc.body;const heading=article.querySelector('h1');
+        if(heading&&!form.elements.title.value)form.elements.title.value=heading.textContent.trim().slice(0,200);
+        if(heading)heading.remove();
+        if(/dược phóng xạ|radiopharmacy|tinh khiết hóa phóng xạ/i.test(article.textContent.slice(0,800)))form.elements.category.value='radiopharmacy';
+        await convertImportedSvg(article);
+        editorState={format:'html',value:sanitizeArticleHtml(article.innerHTML)};loadMode('visual');
+      }else{
+        const heading=text.match(/^#\s+(.+)$/m);if(heading&&!form.elements.title.value)form.elements.title.value=heading[1].trim().slice(0,200);
+        editorState={format:'markdown',value:text};loadMode('markdown');
+      }
+      markDraftDirty();$('#npEditorHint').textContent='Đã nhập '+file.name+'. Hãy xem trước và bổ sung lại ảnh SVG/ảnh có đường dẫn nội bộ nếu cần.';
+    }catch(err){alert('Không đọc được tệp: '+err.message);}finally{e.target.value='';}
+  };
+  function draftPreview(){
+    const a=currentArticle(),title=form.elements.title.value.trim()||'Bài viết chưa có tiêu đề';
+    const body=a.format==='html'?sanitizeArticleHtml(a.value):renderBody(a.value);
+    const coverHtml=cover?'<figure><img class="np-cover" src="'+esc(cover)+'" alt="Ảnh bìa"><figcaption>'+esc($('#npCoverCaption').value)+'</figcaption></figure>':'';
+    $('#npArticlePreview').innerHTML='<p class="np-preview-label">Xem trước bài viết — chưa đăng</p><h1>'+esc(title)+'</h1>'+(form.elements.summary.value.trim()?'<p class="np-lead">'+esc(form.elements.summary.value.trim())+'</p>':'')+coverHtml+'<div class="np-preview-content">'+body+'</div>';
+    $('#npArticlePreview').hidden=false;previewOpen=true;$('#npBackEditor').hidden=false;$('#npPreviewArticle').hidden=true;
+    visualWrap.hidden=true;sourceWrap.hidden=true;$('#npArticlePreview').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  $('#npPreviewArticle').onclick=draftPreview;
+  $('#npBackEditor').onclick=()=>{
+    $('#npArticlePreview').hidden=true;previewOpen=false;$('#npBackEditor').hidden=true;$('#npPreviewArticle').hidden=false;
+    visualWrap.hidden=currentMode!=='visual';sourceWrap.hidden=currentMode==='visual';
+    $('#npEditorHint').scrollIntoView({behavior:'smooth',block:'nearest'});
+  };
+  form.addEventListener('input',e=>{if(e.target!==$('#npCoverFile')){markDraftDirty();updateStats();}});
+  form.addEventListener('change',e=>{if(e.target!==$('#npCoverFile'))markDraftDirty();});
+  async function saveArticle(publishOverride){
+    if(coverBusy||inlineBusy){$('#npMsg').textContent='Ảnh đang được xử lý, hãy thử lại.';return;}
+    const article=currentArticle(),plain=article.format==='html'?new DOMParser().parseFromString(article.value,'text/html').body.textContent.trim():article.value.trim();
+    if(!plain&&!/(<img|!\[)/i.test(article.value)){ $('#npMsg').textContent='Vui lòng nhập nội dung bài viết.';return;}
+    const row={title:form.elements.title.value.trim(),category:form.elements.category.value,author:form.elements.author.value.trim()||null,summary:form.elements.summary.value.trim()||null,cover_url:cover||null,body:writePostBody(encodeArticle(article),cover?form.elements.cover_caption.value.trim():''),published:publishOverride===undefined?form.elements.published.checked:publishOverride};
+    if(!row.title){form.elements.title.focus();return;}
+    if(row.body.length>3400000){$('#npMsg').textContent='Bài quá lớn (> 3,4 MB). Hãy giảm số lượng/dung lượng ảnh hoặc dùng URL ảnh.';return;}
+    const btn=$('#npPublish'),msg=$('#npMsg');btn.disabled=true;$('#npSaveAsDraft').disabled=true;msg.className='np-msg';msg.textContent='Đang lưu bài viết…';
+    try{
+      if(p.id)await api('posts?id=eq.'+encodeURIComponent(p.id),{method:'PATCH',body:JSON.stringify(row)});
+      else await api('posts',{method:'POST',body:JSON.stringify(row)});
+      clearTimeout(autosaveTimer);localStorage.removeItem(draftKey);editing=null;newsPage=1;await load();adminView();
+      const m=$('#npMsg');if(m){m.className='np-msg ok';m.textContent=row.published?'Đã đăng bài thành công.':'Đã lưu nháp vào Supabase.';}
+    }catch(err){btn.disabled=false;$('#npSaveAsDraft').disabled=false;msg.textContent='Lỗi khi lưu: '+err.message;}
+  }
+  form.onsubmit=e=>{e.preventDefault();saveArticle();};
+  $('#npSaveAsDraft').onclick=()=>saveArticle(false);
+  const cancel=$('#npCancel');if(cancel)cancel.onclick=()=>{clearTimeout(autosaveTimer);editing=null;adminView();};
+  $('#npLogout').onclick=()=>{clearTimeout(autosaveTimer);saveSession(null);editing=null;load();adminView();};
+  loadMode(currentMode);showRestore();
 }
+
 document.addEventListener("click", async e => {
   const t = e.target;
   const o = t.closest("[data-np-open]"); if (o) {
@@ -3983,7 +4650,7 @@ function article(route){
  if(route.kind==='incident')return window.NucleoIncidents.article(route.id);
  if(route.kind==='thong-tin'&&route.id==='gioi-thieu'){
   const html=$('#aboutContent').innerHTML;
-  return {title:'Về thư viện',crumbs:[],html};
+  return {title:'Giới thiệu Thư Viện Y Học Hạt Nhân',crumbs:[],html};
  }
  return null;
 }
@@ -4059,6 +4726,99 @@ $('#search').addEventListener('input',()=>{
 window.addEventListener('hashchange',sync);
 window.addEventListener('popstate',sync);
 sync();
+})();
+
+</script>
+<script id="nucleo-global-search">
+/* Search every readable content source; keep the reader's existing routes. */
+(() => {
+'use strict';
+const root = document.getElementById('siteSearchResults');
+const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const types = {'tai-lieu':'Tài liệu','cam-nang':'Cẩm nang','incident':'Sự cố y khoa','bai-viet':'Bài viết','thong-tin':'Thông tin','trang-chu':'Trang chủ'};
+const plain = html => {
+  const template = document.createElement('template');
+  template.innerHTML = String(html || '').replace(/<\/(?:p|h[1-6]|li|section|div|tr|td|th|figcaption)>/gi, '$& ');
+  const box = template.content;
+  box.querySelectorAll('script,style,nav,button').forEach(el => el.remove());
+  const imageText = [...box.querySelectorAll('img[alt]')].map(img => img.alt).join(' ');
+  return (box.textContent + ' ' + imageText).replace(/\s+/g, ' ').trim();
+};
+function fold(value) {
+  return String(value ?? '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd').toLowerCase()
+    .replace(/\b(\d{1,3})(m?)\s*[-–]?\s*(tc|f|ga|i|tl|lu|y|sm|sr|ra|in|cs|sn|re|ac)\b/g, (_, n, m, el) => el + n + m)
+    .replace(/\b(tc|f|ga|i|tl|lu|y|sm|sr|ra|in|cs|sn|re|ac)\s*[-–]?\s*(\d{1,3})(m?)\b/g, (_, el, n, m) => el + n + m)
+    .replace(/[^a-z0-9]+/g, ' ').trim();
+}
+let index = [];
+function rebuild() {
+  const entries = [];
+  const add = (kind, id, title, text, date = '') => entries.push({kind,id:String(id),title,text,date,titleKey:fold(title),textKey:fold(text)});
+  sopDatabase.forEach(doc => {
+    const item = window.NucleoDocuments.article(doc.id);
+    if (item) add('tai-lieu', doc.id, doc.title, plain(item.html) + ' ' + categoryLabel(doc.category) + ' ' + (doc.tags || []).map(categoryLabel).join(' ') + ' ' + (doc.legalNote || ''), String(doc.year || ''));
+  });
+  (window.NucleoHandbook?.ids || []).forEach(id => {
+    const item = window.NucleoHandbook.article(id);
+    if (item) add('cam-nang', id, item.title, plain(item.html));
+  });
+  (window.NUCLEO_CASES || []).forEach(item => {
+    const ownContent = [item.title,item.summary,item.tracer,item.procedure,item.outcome,item.keywords,...item.facts.flat(),...item.sections.flat()].join(' ');
+    add('incident', item.id, item.title, plain(ownContent));
+  });
+  (window.NucleoPosts?.searchEntries() || []).forEach(item => add('bai-viet', item.id, item.title, plain(item.html), item.date));
+  const about = document.getElementById('aboutContent');
+  if (about) add('thong-tin','gioi-thieu','Giới thiệu Thư Viện Y Học Hạt Nhân',plain(about.innerHTML));
+  const home = document.getElementById('editorialHome')?.cloneNode(true);
+  if (home) {
+    home.querySelector('#latestPosts')?.remove();
+    add('trang-chu','home','Trang chủ',plain(home.innerHTML));
+  }
+  index = entries;
+}
+function find(query) {
+  const phrase = fold(query), terms = [...new Set(phrase.split(' ').filter(Boolean))];
+  if (!terms.length) return [];
+  return index.filter(item => terms.every(term => (item.titleKey + ' ' + item.textKey).includes(term)))
+    .map(item => ({...item,score:(item.titleKey.includes(phrase) ? 100 : 0) + terms.reduce((sum, term) => sum + (item.titleKey.includes(term) ? 10 : 0), 0)}))
+    .sort((a,b) => b.score - a.score || (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0) || a.title.localeCompare(b.title,'vi'));
+}
+function snippet(item, query) {
+  const terms = fold(query).split(' ').filter(Boolean);
+  const positions = terms.map(term => item.textKey.indexOf(term)).filter(n => n >= 0);
+  const position = positions.length ? Math.min(...positions) : 0;
+  let start = Math.max(0, position - 75);
+  if (start) { const space = item.text.indexOf(' ', start); if (space >= 0) start = space + 1; }
+  const end = Math.min(item.text.length, start + 230);
+  return (start ? '…' : '') + item.text.slice(start, end).trim() + (end < item.text.length ? '…' : '');
+}
+function resultLink(item) {
+  const route = item.kind === 'trang-chu' ? 'href="#" data-front="home"' : 'href="#' + item.kind + '/' + encodeURIComponent(item.id) + '" data-reader-kind="' + item.kind + '" data-reader-id="' + esc(item.id) + '"';
+  return '<a ' + route + '>' + esc(item.title) + '</a>';
+}
+function renderSearch(query = state.query) {
+  const active = !!query.trim();
+  document.body.classList.toggle('nucleo-searching', active);
+  root.hidden = !active;
+  if (!active) { root.innerHTML = ''; return; }
+  const results = find(query);
+  root.innerHTML = '<div class="ns-heading"><h2>Kết quả tìm kiếm</h2><p role="status" aria-live="polite" aria-atomic="true">' + results.length + ' kết quả cho “' + esc(query.trim()) + '”</p></div>' +
+    (results.length ? '<div class="ns-list">' + results.map(item => '<article class="ns-result"><span class="ns-type">' + types[item.kind] + '</span><h3>' + resultLink(item) + '</h3><p>' + esc(snippet(item, query)) + '</p></article>').join('') + '</div>' : '<div class="ns-empty"><p>Không tìm thấy nội dung phù hợp.</p><button type="button" class="np-btn ghost" data-ns-clear>Xóa tìm kiếm</button></div>');
+  window.applyClinicalTypography?.(root);
+}
+function clear() {
+  if (!state.query) return;
+  state.query = '';
+  render();
+}
+window.NucleoSearch = {render:renderSearch,refresh(){rebuild();renderSearch();}};
+document.addEventListener('click', event => {
+  if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+  if (event.target.closest('[data-ns-clear]')) { clear(); document.getElementById('search').focus(); }
+  else if (event.target.closest('[data-front],[data-front-nav],[data-front-cat],[data-front-origin],.brand,#modeLibrary,#modeHandbook,#savedTop')) clear();
+}, true);
+rebuild();
+renderSearch();
 })();
 
 </script>
